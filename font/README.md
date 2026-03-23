@@ -1,0 +1,1 @@
+Have font default to Khmer/English aka Hybrid Font
