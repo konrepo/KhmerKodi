@@ -2,6 +2,8 @@
 
 Asian dramas dubbed in Khmer
 
+Support Me: https://ko-fi.com/thedevilz
+
 <b>Installation:</B>
 
 1. Go to the Kodi <b>File Manager</b>
