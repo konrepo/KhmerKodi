@@ -114,23 +114,24 @@ def HOME():
             "categories": [
                 ("VIP", f"{VIP}", ICON_VIP, "index_vip"),            
                 ("Sunday", f"{SUNDAY}", ICON_SUNDAY, "index_sunday"),
+                ("Phumi2", f"{PHUMIK}", ICON_PHUMIK2, "index_phumik"),
                 ("iDrama", f"{IDRAMA}", ICON_IDRAMA, "index_idrama"),                
                 ("KhmerAve", f"{KHMERAVENUE}album/", ICON_KHMERAVE, "index_khmeravenue"),
                 ("Merlkon", f"{MERLKON}album/", ICON_MERLKON, "index_merlkon")
             ]
-        },       
-        {
-            "title": "PhumiKhmer",
-            #"logo": "https://phumikhmer2.com/home/img/logo.png",
-            "action": "index_phumik",
-            "categories": [
-                ("Khmer", f"{MERLKON}country/cambodia/", ICON_MERLKON, "index_merlkon"),
-                ("Korean", f"{KHMERAVENUE}country/korea/", ICON_KHMERAVE, "index_khmeravenue"),  
-                ("Chinese", f"{PHUMIK}search/label/Chinese?&max-results=24", ICON_PHUMIK2),
-                ("Korean1", f"{PHUMIK}search/label/Korea?&max-results=24", ICON_PHUMIK2),
-                ("Thai", f"{PHUMIK}search/label/Thai?&max-results=24", ICON_PHUMIK2)                
-            ]
-        }
+        }       
+        #{
+        #    "title": "PhumiKhmer",
+        #    #"logo": "https://phumikhmer2.com/home/img/logo.png",
+        #    "action": "index_phumik",
+        #    "categories": [
+        #       ("Khmer", f"{MERLKON}country/cambodia/", ICON_MERLKON, "index_merlkon"),
+        #       ("Korean", f"{KHMERAVENUE}country/korea/", ICON_KHMERAVE, "index_khmeravenue"),  
+        #        ("Chinese", f"{PHUMIK}search/label/Chinese?&max-results=24", ICON_PHUMIK2),
+        #       ("Korean1", f"{PHUMIK}search/label/Korea?&max-results=24", ICON_PHUMIK2),
+        #       ("Thai", f"{PHUMIK}search/label/Thai?&max-results=24", ICON_PHUMIK2)                
+        #    ]
+        #}
         #{
         #    "title": "Ckh7",
         #    "logo": "https://www.ckh7.com/uploads/custom-logo.png",

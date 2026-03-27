@@ -41,27 +41,84 @@ def SINDEX_PHUMIK(url, end_directory=True):  # for search
 def _render_phumik_listing(url, label_suffix=None, include_pagination=True, end_directory=True):
     soup, html = OpenSoup_KH(url, return_html=True)
 
-    for wrap in soup.find_all('div', class_='post-filter-inside-wrap'):
-        a_tag = wrap.find('a', class_='post-filter-link')
-        h2_tag = wrap.find('h2', class_=re.compile(r'entry-title'))
-        img_tag = wrap.find('img', class_='snip-thumbnail')
+    posts = soup.select("div.blog-posts div.grid-posts article.blog-post")
+
+    for post in posts:
+        a_tag = post.select_one("div.post-filter-image a.post-filter-link")
+        h2_tag = post.select_one("h2.entry-title")
+        img_tag = post.select_one("img.snip-thumbnail")
+
         if not (a_tag and h2_tag and img_tag):
             continue
 
-        v_link = a_tag['href']
-        v_title = h2_tag.get_text(strip=True)
-        v_image = img_tag.get('data-src') or img_tag.get('src', '')
-        v_image = re.sub(r'/w\d+-h\d+[^/]+/', '/s1600/', v_image)
+        # category/tag text
+        post_tag = post.select_one("span.post-tag-fly")
+        label_tag = post.select_one("span.label-news-flex")
+
+        post_tag_text = post_tag.get_text(" ", strip=True).lower() if post_tag else ""
+        label_text = label_tag.get_text(" ", strip=True).lower() if label_tag else ""
+        title_text = h2_tag.get_text(" ", strip=True).strip()
+        title_lower = title_text.lower()
+        href = (a_tag.get("href") or "").strip().lower()
+
+        # EXCLUDE actor articles
+        if (
+            post_tag_text == "actors"
+            or label_text == "actors"
+            or "/search/label/actors" in href
+            or "biography, career" in title_lower
+            or "popular chinese drama roles" in title_lower
+            or "rising star" in title_lower
+        ):
+            continue
+
+        v_link = (a_tag.get("href") or "").strip()
+        v_image = img_tag.get("data-src") or img_tag.get("src") or ""
+        v_image = re.sub(r"/w\d+-h\d+[^/]+/", "/s1600/", v_image)
         v_image = clean_image_url(v_image)
 
-        xbmc.log(f"[KDUBBED] PHUMIK CLEANED LISTING IMAGE: {v_image}", xbmc.LOGINFO)
-
-        label = f"{v_title}{label_suffix}" if label_suffix else v_title
-        addDir(label, v_link, "episode_players", v_image)
+        label = f"{title_text}{label_suffix}" if label_suffix else title_text
+        addDir(label, v_link, "episode_phumik", v_image)
 
     if include_pagination:
-        for page_url in re.findall(r"<a[^>]*class='blog-pager-older-link'[^>]*href='([^']+)'", html):
-            addDir('NEXT PAGE', page_url, "index_phumik", "")
+        next_page = ""
+
+        # page 1 style
+        load_more = soup.select_one("#blog-pager-ok a.load-more")
+        if load_more:
+            next_page = (load_more.get("href") or "").strip()
+
+        # page 2+ style
+        if not next_page:
+            older_link = soup.select_one("#blog-pager a.blog-pager-older-link")
+            if older_link:
+                next_page = (older_link.get("href") or "").strip()
+
+        # generic fallback
+        if not next_page:
+            for a in soup.find_all("a", href=True):
+                href = (a.get("href") or "").strip()
+                cls = " ".join(a.get("class", [])) if a.get("class") else ""
+                if (
+                    "updated-max=" in href and
+                    ("blog-pager-older-link" in cls or "load-more" in cls)
+                ):
+                    next_page = href
+                    break
+
+        # raw html fallback
+        if not next_page:
+            m = re.search(
+                r'<a[^>]+class=[\'"][^\'"]*(?:blog-pager-older-link|load-more)[^\'"]*[\'"][^>]+href=[\'"]([^\'"]+)[\'"]',
+                html,
+                re.I
+            )
+            if m:
+                next_page = m.group(1).strip()
+
+        if next_page:
+            next_page = next_page.replace("&amp;", "&")
+            addDir("NEXT PAGE", next_page, "index_phumik", "")
 
     if end_directory:
         xbmcplugin.endOfDirectory(PLUGIN_HANDLE)
