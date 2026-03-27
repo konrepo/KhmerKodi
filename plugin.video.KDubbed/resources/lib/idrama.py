@@ -26,10 +26,15 @@ PLUGIN_HANDLE = int(sys.argv[1])
 def INDEX_IDRAMA(url):
     _render_idrama_listing(url)
 
-def SINDEX_IDRAMA(url):
-    _render_idrama_listing(url, label_suffix=" [COLOR green]iDrama[/COLOR]", include_pagination=False)
+def SINDEX_IDRAMA(url, end_directory=True):
+    _render_idrama_listing(
+        url,
+        label_suffix=" [COLOR green]iDrama[/COLOR]",
+        include_pagination=False,
+        end_directory=end_directory
+    )
 
-def _render_idrama_listing(url, label_suffix="", include_pagination=True):
+def _render_idrama_listing(url, label_suffix="", include_pagination=True, end_directory=True):
     soup, _ = OpenSoup_KH(url, return_html=True)
     grid = soup.select_one('div.posts-wrap.th-grid-3') or soup
 
@@ -51,7 +56,7 @@ def _render_idrama_listing(url, label_suffix="", include_pagination=True):
                 v_image = clean_image_url(v_image)
                 xbmc.log(f"[KDUBBED] CLEANED LISTING IMAGE: {v_image}", xbmc.LOGINFO)
 
-        label = v_title + label_suffix  # suffix only shows in search
+        label = v_title + label_suffix
         addDir(label, v_link, "episode_players", v_image)
 
     if include_pagination:
@@ -59,7 +64,8 @@ def _render_idrama_listing(url, label_suffix="", include_pagination=True):
         if nxt and nxt.get('href'):
             addDir("[B]NEXT PAGE ›[/B]", urljoin(url, nxt['href']), "index_idrama", "")
 
-    xbmcplugin.endOfDirectory(PLUGIN_HANDLE)
+    if end_directory:
+        xbmcplugin.endOfDirectory(PLUGIN_HANDLE)
  
 def EPISODE_TVSABAY(start_url, v_image=""):  # iDrama --> t.co --> tvsabay
     xbmc.log(f"[KDUBBED] EPISODE_TVSABAY received v_image={v_image}", xbmc.LOGINFO)

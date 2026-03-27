@@ -159,28 +159,72 @@ def HOME():
 
 # Search function    
 def SEARCH():
+    kb = xbmc.Keyboard('', 'Enter Search Text')
+    kb.doModal()
+    if not kb.isConfirmed():
+        return
+
+    query = kb.getText().strip()
+    if not query:
+        return
+
     sources = [
-        #("Ckh7",          lambda q: ckch7.SINDEX_CKCH7(f'{ckch7.CKCH7}search.php?keywords={quote_plus(q)}')),
-        ("iDrama",        lambda q: idrama.SINDEX_IDRAMA(f'{idrama.IDRAMA}?s={quote_plus(q)}')),
-        ("KhmerAvenue",   lambda q: khmerav.INDEX_GENERIC(f'{khmerav.KHMERAVENUE}?s={quote_plus(q)}', 'index_khmeravenue', label_suffix=" [COLOR yellow]KHMERAVE[/COLOR]")),
-        ("Merlkon",       lambda q: khmerav.INDEX_GENERIC(f'{khmerav.MERLKON}?s={quote_plus(q)}', 'index_merlkon', label_suffix=" [COLOR cyan]MERLKON[/COLOR]")),
-        ("PhumiKhmer",    lambda q: phumikhmer.SINDEX_PHUMIK(f'{phumikhmer.PHUMIK}search?q={quote_plus(q)}')),
-        ("Sunday",        lambda q: sunday.SINDEX_SUNDAY(f'{sunday.SUNDAY}search?q={quote_plus(q)}')),
-        ("Vip",           lambda q: vip.SINDEX_VIP(f'{vip.VIP}?s={quote_plus(q)}')),         
+        ("IDRAMA", ICON_IDRAMA, lambda q: idrama.SINDEX_IDRAMA(
+            f'{idrama.IDRAMA}?s={quote_plus(q)}',
+            end_directory=False
+        )),
+        ("KHMERAVE", ICON_KHMERAVE, lambda q: khmerav.INDEX_GENERIC(
+            f'{khmerav.KHMERAVENUE}?s={quote_plus(q)}',
+            'index_khmeravenue',
+            'khmeravenue',
+            label_suffix=" [COLOR yellow]KHMERAVE[/COLOR]",
+            end_directory=False,
+            include_pagination=False
+        )),
+        ("MERLKON", ICON_MERLKON, lambda q: khmerav.INDEX_GENERIC(
+            f'{khmerav.MERLKON}?s={quote_plus(q)}',
+            'index_merlkon',
+            'merlkon',
+            label_suffix=" [COLOR cyan]MERLKON[/COLOR]",
+            end_directory=False,
+            include_pagination=False
+        )),
+        ("PHUMIKHMER", ICON_PHUMIK2, lambda q: phumikhmer.SINDEX_PHUMIK(
+            f'{phumikhmer.PHUMIK}search?q={quote_plus(q)}',
+            end_directory=False
+        )),
+        ("SUNDAY", ICON_SUNDAY, lambda q: sunday.SINDEX_SUNDAY(
+            f'{sunday.SUNDAY}search?q={quote_plus(q)}',
+            end_directory=False
+        )),
+        ("VIP", ICON_VIP, lambda q: vip.SINDEX_VIP(
+            f'{vip.VIP}?s={quote_plus(q)}',
+            end_directory=False
+        )),
+        # ("CKCH7", ICON_WHATEVER, lambda q: ckch7.SINDEX_CKCH7(
+        #     f'{ckch7.CKCH7}search.php?keywords={quote_plus(q)}',
+        #     end_directory=False
+        # )),
     ]
-    dialog = xbmcgui.Dialog()
-    idx = dialog.select('Search From:', [label for label, _ in sources])
-    if idx == -1: return
 
-    kb = xbmc.Keyboard('', 'Enter Search Text'); kb.doModal()
-    if not kb.isConfirmed(): return
-    query = kb.getText()
+    errors = []
 
-    try:
-        sources[idx][1](query)
-    except Exception as e:
-        xbmcgui.Dialog().notification("Search Error", str(e), xbmcgui.NOTIFICATION_ERROR)
-        xbmc.log(f"[{ADDON_ID}] Search dispatch failed: {e}", xbmc.LOGERROR)
+    for label, icon, search_func in sources:
+        try:
+            addDir(f"[B][COLOR red]----- {label} -----[/COLOR][/B]", "", "", icon)
+            search_func(query)
+        except Exception as e:
+            errors.append(f"{label}: {e}")
+            xbmc.log(f"[{ADDON_ID}] Search failed for {label}: {e}", xbmc.LOGERROR)
+
+    xbmcplugin.endOfDirectory(PLUGIN_HANDLE)
+
+    if errors:
+        xbmcgui.Dialog().notification(
+            "Search Warning",
+            f"{len(errors)} source(s) failed. Check log.",
+            xbmcgui.NOTIFICATION_WARNING
+        )
 
 
 # KhmerTV

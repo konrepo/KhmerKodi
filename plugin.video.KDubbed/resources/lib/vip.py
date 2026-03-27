@@ -24,10 +24,15 @@ PLUGIN_HANDLE = int(sys.argv[1])
 def INDEX_VIP(url):
     _render_vip_listing(url)
 
-def SINDEX_VIP(url):
-    _render_vip_listing(url, label_suffix=" [COLOR green]Vip[/COLOR]", include_pagination=False)
+def SINDEX_VIP(url, end_directory=True):
+    _render_vip_listing(
+        url,
+        label_suffix=" [COLOR green]Vip[/COLOR]",
+        include_pagination=False,
+        end_directory=end_directory
+    )
 
-def _render_vip_listing(url, label_color=None, label_suffix="", include_pagination=True):
+def _render_vip_listing(url, label_color=None, label_suffix="", include_pagination=True, end_directory=True):
     soup, html = OpenSoup_KH(url, return_html=True)
 
     for art in soup.find_all('article', class_=re.compile(r'listing-item-grid')):
@@ -63,7 +68,8 @@ def _render_vip_listing(url, label_color=None, label_suffix="", include_paginati
             xbmc.log(f"[VIP] Next page URL resolved: {page_url}", xbmc.LOGINFO)
             addDir("[B]NEXT PAGE ›[/B]", page_url, "index_vip", "")
 
-    xbmcplugin.endOfDirectory(PLUGIN_HANDLE)
+    if end_directory:
+        xbmcplugin.endOfDirectory(PLUGIN_HANDLE)
 
 
 def EPISODE_CRAFT4U(start_url, icon=""):

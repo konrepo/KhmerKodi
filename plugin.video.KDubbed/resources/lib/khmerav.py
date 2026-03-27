@@ -24,7 +24,7 @@ PLUGIN_HANDLE = int(sys.argv[1])
 
 
 ############## KhmerAve / Merlkon SITE ******************
-def INDEX_GENERIC(url, action, site_name='', label_suffix=None):
+def INDEX_GENERIC(url, action, site_name='', label_suffix=None, end_directory=True, include_pagination=True):
     try:
         headers = {'User-Agent': USER_AGENT}
         if 'khmeravenue.com' in url or site_name == 'khmeravenue':
@@ -83,48 +83,51 @@ def INDEX_GENERIC(url, action, site_name='', label_suffix=None):
             except Exception as e:
                 xbmc.log(f"[{ADDON_ID}] INDEX_GENERIC ({site_name}) item error: {str(e)}", xbmc.LOGWARNING)
 
-        try:
-            nav = soup.select_one('nav.navigation.pagination .nav-links')
-            if nav:
-                for a in nav.select('a.page-numbers[href]'):
-                    text = a.get_text(strip=True)
-                    href = urljoin(url, a['href'])
-                    classes = a.get('class') or []
-                    if 'next' in classes:
-                        addDir('Next »', href, action, '')
-                    elif 'prev' in classes:
-                        addDir('« Previous', href, action, '')
-                    elif text.isdigit():
-                        addDir(f'Page {text}', href, action, '')
-        except Exception as e:
-            xbmc.log(f"[{ADDON_ID}] INDEX_GENERIC pagination error: {str(e)}", xbmc.LOGWARNING)
+        if include_pagination:
+            try:
+                nav = soup.select_one('nav.navigation.pagination .nav-links')
+                if nav:
+                    for a in nav.select('a.page-numbers[href]'):
+                        text = a.get_text(strip=True)
+                        href = urljoin(url, a['href'])
+                        classes = a.get('class') or []
+                        if 'next' in classes:
+                            addDir('Next »', href, action, '')
+                        elif 'prev' in classes:
+                            addDir('« Previous', href, action, '')
+                        elif text.isdigit():
+                            addDir(f'Page {text}', href, action, '')
+            except Exception as e:
+                xbmc.log(f"[{ADDON_ID}] INDEX_GENERIC pagination error: {str(e)}", xbmc.LOGWARNING)
 
-        try:
-            pnav = soup.select_one("div.wp-pagenavi")
-            if pnav:
-                for a in pnav.find_all("a", href=True):
-                    text = a.get_text(strip=True)
-                    href = urljoin(url, a["href"])
-                    classes = a.get("class") or []
+            try:
+                pnav = soup.select_one("div.wp-pagenavi")
+                if pnav:
+                    for a in pnav.find_all("a", href=True):
+                        text = a.get_text(strip=True)
+                        href = urljoin(url, a["href"])
+                        classes = a.get("class") or []
 
-                    if "nextpostslink" in classes:
-                        addDir('Next »', href, action, '')
-                    elif "previouspostslink" in classes:
-                        addDir('« Previous', href, action, '')
-                    elif "last" in classes:
-                        addDir('Last Page →', href, action, '')
-                    elif text.isdigit():
-                        addDir(f'Page {text}', href, action, '')
-        except Exception as e:
-            xbmc.log(f"[{ADDON_ID}] WP-PageNavi pagination error: {str(e)}", xbmc.LOGWARNING)
+                        if "nextpostslink" in classes:
+                            addDir('Next »', href, action, '')
+                        elif "previouspostslink" in classes:
+                            addDir('« Previous', href, action, '')
+                        elif "last" in classes:
+                            addDir('Last Page →', href, action, '')
+                        elif text.isdigit():
+                            addDir(f'Page {text}', href, action, '')
+            except Exception as e:
+                xbmc.log(f"[{ADDON_ID}] WP-PageNavi pagination error: {str(e)}", xbmc.LOGWARNING)
 
-        xbmcplugin.endOfDirectory(PLUGIN_HANDLE)
+        if end_directory:
+            xbmcplugin.endOfDirectory(PLUGIN_HANDLE)
         return
 
     except Exception as e:
         xbmc.log(f"[{ADDON_ID}] INDEX_GENERIC ({site_name}) failed: {str(e)}", xbmc.LOGERROR)
         xbmcgui.Dialog().ok("Error", f"Failed to load {site_name or 'page'}.")
-        xbmcplugin.endOfDirectory(PLUGIN_HANDLE)
+        if end_directory:
+            xbmcplugin.endOfDirectory(PLUGIN_HANDLE)
         return
 
 

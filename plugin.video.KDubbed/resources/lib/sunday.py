@@ -27,10 +27,15 @@ PLUGIN_HANDLE = int(sys.argv[1])
 def INDEX_SUNDAY(url):
     render_sunday_listing(url)
 
-def SINDEX_SUNDAY(url):
-    render_sunday_listing(url, label_suffix=" [COLOR green]Sunday[/COLOR]", include_pagination=False)
+def SINDEX_SUNDAY(url, end_directory=True):
+    render_sunday_listing(
+        url,
+        label_suffix=" [COLOR green]Sunday[/COLOR]",
+        include_pagination=False,
+        end_directory=end_directory
+    )
 
-def render_sunday_listing(url, label_suffix="", include_pagination=True):
+def render_sunday_listing(url, label_suffix="", include_pagination=True, end_directory=True):
     try:
         headers = {'Referer': 'https://www.sundaydrama.com/', 'User-Agent': USER_AGENT}
         html = OpenURL_KH(url, headers=headers, as_text=True)
@@ -82,7 +87,8 @@ def render_sunday_listing(url, label_suffix="", include_pagination=True):
                     next_url += "&m=1" if "?" in next_url else "?m=1"
                 addDir('[B]Next Page >>>[/B]', next_url, "index_sunday", '')
 
-        xbmcplugin.endOfDirectory(PLUGIN_HANDLE)
+        if end_directory:
+            xbmcplugin.endOfDirectory(PLUGIN_HANDLE)
 
     except Exception as e:
         import traceback

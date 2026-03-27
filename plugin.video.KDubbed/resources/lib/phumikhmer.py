@@ -30,10 +30,15 @@ PLUGIN_HANDLE = int(sys.argv[1])
 def INDEX_PHUMIK(url):
     _render_phumik_listing(url, label_suffix=None, include_pagination=True)
 
-def SINDEX_PHUMIK(url):  # for search
-    _render_phumik_listing(url, label_suffix=" [COLOR green]PhumiKhmer[/COLOR]", include_pagination=False)
+def SINDEX_PHUMIK(url, end_directory=True):  # for search
+    _render_phumik_listing(
+        url,
+        label_suffix=" [COLOR green]PhumiKhmer[/COLOR]",
+        include_pagination=False,
+        end_directory=end_directory
+    )
 
-def _render_phumik_listing(url, label_suffix=None, include_pagination=True):
+def _render_phumik_listing(url, label_suffix=None, include_pagination=True, end_directory=True):
     soup, html = OpenSoup_KH(url, return_html=True)
 
     for wrap in soup.find_all('div', class_='post-filter-inside-wrap'):
@@ -58,7 +63,8 @@ def _render_phumik_listing(url, label_suffix=None, include_pagination=True):
         for page_url in re.findall(r"<a[^>]*class='blog-pager-older-link'[^>]*href='([^']+)'", html):
             addDir('NEXT PAGE', page_url, "index_phumik", "")
 
-    xbmcplugin.endOfDirectory(PLUGIN_HANDLE)
+    if end_directory:
+        xbmcplugin.endOfDirectory(PLUGIN_HANDLE)
  
 def EPISODE_PHUMIK(url, v_image=""):
     xbmc.log(f"[KDUBBED] EPISODE_PHUMIK received v_image={v_image}", xbmc.LOGINFO)
