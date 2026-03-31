@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+    
+<settings>
+  <category label="Khmer Dubbed">
+    <setting id="show_support_popup" type="bool" label="Show support popup on launch" default="true"/>
+  </category>
+</settings>
