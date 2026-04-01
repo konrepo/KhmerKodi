@@ -189,41 +189,123 @@ def EPISODE_PLAYERS(url, name, icon=""):
         xbmcplugin.endOfDirectory(PLUGIN_HANDLE)
         return
 
-
     # ── VIP / iDrama ─────────────────────────────────────────
     if is_vip_url(url) or is_idrama_url(url):
         decoded = fetch_decoded(url, as_text=True)
+
+        def extract_max_ep(text):
+            if not text:
+                return None
+            text = str(text)
+            patterns = [
+                r'\[\s*EP\s*(\d+)\s*(?:END)?\s*\]',
+                r'\bEP\s*(\d+)\b',
+                r'\bEpisode\s*(\d+)\b',
+            ]
+            for pat in patterns:
+                m = re.search(pat, text, re.I)
+                if m:
+                    try:
+                        return int(m.group(1))
+                    except Exception:
+                        pass
+            return None
+
+        def is_better_source(new_url, old_url):
+            def score(u):
+                u = (u or "").lower()
+                return (
+                    4 if ".m3u8" in u else
+                    3 if u.split('?', 1)[0].endswith((".mp4", ".aaa.mp4", ".gaa.mp4", ".caa.mp4")) else
+                    2 if any(h in u for h in ("ok.ru", "youtube.com", "youtu.be", "vimeo.com", "dailymotion.com")) else
+                    1
+                )
+            return score(new_url) > score(old_url)
+
+        # get correct max episode from page title / og:title
+        page_title = ""
+        m = re.search(r"<title>(.*?)</title>", decoded, re.I | re.S)
+        if m:
+            page_title = html_unescape(m.group(1)).strip()
+
+        if not page_title:
+            m = re.search(
+                r'<meta[^>]+property=["\']og:title["\'][^>]+content=["\']([^"\']+)["\']',
+                decoded, re.I
+            )
+            if m:
+                page_title = html_unescape(m.group(1)).strip()
+
+        max_ep = extract_max_ep(page_title)
+        xbmc.log(f"[{ADDON_ID}] VIP page title: {page_title} | max_ep={max_ep}", xbmc.LOGINFO)
+
         blogger_urls = extract_vip_blogger_json_urls_from_page(decoded)
+
         if not blogger_urls:
-            craft = re.search(r'href=["\']?(https?://(?:t\.co|(?:www\.)?(craft4u\.top|tvsabay\.com))/[^"\']+)', decoded, re.I)
+            craft = re.search(
+                r'href=["\']?(https?://(?:t\.co|(?:www\.)?(craft4u\.top|tvsabay\.com))/[^"\']+)',
+                decoded, re.I
+            )
             if craft:
                 craft_url = craft.group(1)
                 if "t.co" in craft_url:
-                    try: craft_url = requests.head(craft_url, allow_redirects=True, timeout=5).url
-                    except Exception as e: return no_eps(f"Failed to resolve t.co link: {e}")
+                    try:
+                        craft_url = requests.head(craft_url, allow_redirects=True, timeout=5).url
+                    except Exception as e:
+                        return no_eps(f"Failed to resolve t.co link: {e}")
+
                 for domain, fn in [("tvsabay.com", EPISODE_TVSABAY), ("onelegend.asia", EPISODE_ONELEGEND)]:
-                    if domain in craft_url: return fn(craft_url, icon)
+                    if domain in craft_url:
+                        return fn(craft_url, icon)
+
                 return EPISODE_CRAFT4U(craft_url)
+
             return no_eps("No blogger feeds were found on this VIP page.")
-        all_links, seen, c = [], set(), 1
+
+        # collect in feed order, dedupe, keep one best source per URL
+        ordered_links = []
+        seen_urls = set()
+
         for bu in blogger_urls:
-            links = parse_blogger_video_links(bu)
-            if not links or all(".mp4" in l['file'] for l in links):
-                links = parse_blogger_video_links_script(bu)
-            for l in links or []:
-                vurl = l.get('file', '').strip()
-                if not vurl or vurl in seen: continue
-                seen.add(vurl)
-                all_links.append({'file': vurl, 'title': f"Episode {c}"}); c += 1
-        if not all_links: return no_eps("No playable episodes found on this VIP page.")
-        for it in all_links:
-            vurl, vtitle = it['file'], it['title']
-            if any(h in vurl for h in ("ok.ru", "youtube.com", "youtu.be", "vimeo.com")):
+            links = parse_blogger_video_links(bu) or []
+            if not links:
+                links = parse_blogger_video_links_script(bu) or []
+
+            xbmc.log(f"[{ADDON_ID}] VIP feed {bu} -> {len(links)} links", xbmc.LOGINFO)
+
+            for l in links:
+                vurl = l.get("file", "").strip()
+                if not vurl:
+                    continue
+
+                if vurl in seen_urls:
+                    continue
+
+                seen_urls.add(vurl)
+                ordered_links.append(vurl)
+
+        if not ordered_links:
+            return no_eps("No playable episodes found on this VIP page.")
+
+        # remove extra mirrors/overflow using title max episode count
+        if max_ep and len(ordered_links) > max_ep:
+            xbmc.log(
+                f"[{ADDON_ID}] VIP trimming links from {len(ordered_links)} to max_ep={max_ep}",
+                xbmc.LOGINFO
+            )
+            ordered_links = ordered_links[:max_ep]
+
+        # final display numbering should follow preserved order
+        for i, vurl in enumerate(ordered_links, 1):
+            vtitle = f"Episode {i}"
+
+            if any(h in vurl for h in ("ok.ru", "youtube.com", "youtu.be", "vimeo.com", "dailymotion.com")):
                 addLink(vtitle, vurl, "video_hosting", icon)
-            elif any(vurl.split('?', 1)[0].endswith(ext) for ext in (".mp4", ".m3u8", ".aaa.mp4", ".gaa.mp4")):
+            elif any(vurl.split('?', 1)[0].endswith(ext) for ext in (".mp4", ".m3u8", ".aaa.mp4", ".gaa.mp4", ".caa.mp4")):
                 addLink(vtitle, vurl, "play_direct", icon)
             else:
                 addLink(vtitle, vurl, "video_hosting", icon)
+
         xbmcplugin.endOfDirectory(PLUGIN_HANDLE)
         return
 

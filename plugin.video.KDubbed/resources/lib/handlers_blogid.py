@@ -175,6 +175,62 @@ def extract_vip_blogger_json_urls_from_page(html):
 
 
 # ==== Blogger link parsers ======================================
+def _extract_blogger_links_in_order(html):
+    links = []
+    seen = set()
+
+    def add(url):
+        if not url:
+            return
+        url = html_unescape(url).strip().rstrip(";")
+        if not url or url in seen:
+            return
+        seen.add(url)
+        links.append({
+            "file": url,
+            "title": ""
+        })
+
+    has_ok_embed = bool(re.search(r"\{embed\s*=\s*ok\}", html, re.I))
+
+    token_re = re.compile(r"""
+        \{ok=(\d+)\} |
+        \{dm=([A-Za-z0-9]+)\} |
+        \{gd=([A-Za-z0-9_-]+)\} |
+        (https?://[^\s"'<>]+(?:\.mp4(?:/[^\s"'<>]+\.m3u8)?|\.m3u8|videoembed/[^\s"'<>]+|preview))
+    """, re.I | re.X)
+
+    for m in token_re.finditer(html):
+        ok_id = m.group(1)
+        dm_id = m.group(2)
+        gd_id = m.group(3)
+        direct = m.group(4)
+
+        if ok_id:
+            if has_ok_embed:
+                add(f"https://ok.ru/videoembed/{ok_id}")
+            continue
+
+        if dm_id:
+            add(f"https://www.dailymotion.com/embed/video/{dm_id}")
+            continue
+
+        if gd_id:
+            add(f"https://drive.google.com/file/d/{gd_id}/preview")
+            continue
+
+        if direct:
+            add(direct)
+            continue
+
+    if not links and has_ok_embed:
+        for ok_id in re.findall(r"\d{10,}", html):
+            add(f"https://ok.ru/videoembed/{ok_id}")
+
+    _log(f"Parsed {len(links)} Blogger links in original order", xbmc.LOGINFO)
+    return links
+
+
 def parse_blogger_video_links(u):
     if "?alt=" not in u:
         u = u.split("?", 1)[0] + "?alt=json"
@@ -188,71 +244,10 @@ def parse_blogger_video_links(u):
         data = json.loads(r)
         html = html_unescape(data.get("entry", {}).get("content", {}).get("$t", ""))
 
-        # Trim multi-server junk
         if "{nextServer}" in html:
             html = html.split("{nextServer}", 1)[0]
 
-        # OK.RU embed handling
-        if "{embed=ok}" in html:
-            ids = re.findall(r"\d{10,}", html)
-            if ids:
-                return [
-                    {'file': f"https://ok.ru/videoembed/{i}", 'title': f"Episode {n:02d}"}
-                    for n, i in enumerate(ids, 1)
-                ]
-
-        links, seen = [], set()
-
-        # ---------------------------------------------------------
-        # 1) SundayDrama Sooplive HLS FIRST
-        # ---------------------------------------------------------
-        for url in re.findall(r"https?://[^\s\"']+?\.mp4(?:/[^\s\"']+\.m3u8)", html):
-            if url in seen:
-                continue
-            seen.add(url)
-            links.append({
-                'file': url.rstrip(";"),
-                'title': f"Episode {len(links)+1}"
-            })
-
-        # ---------------------------------------------------------
-        # 2) Original MP4 parser (only if not HLS)
-        # ---------------------------------------------------------
-        for url, ep in re.findall(r"(https?:\/\/[^\s\"']+?\.mp4)(?:\s+(\d{1,3}))?", html):
-            if url in seen or any(x in url for x in ["m3u8", "cloudokyo.cloud", "rumble.com/hls-vod"]):
-                continue
-            seen.add(url)
-            links.append({
-                'file': url,
-                'title': f"Episode {int(ep) if ep else len(links)+1}"
-            })
-
-        # ---------------------------------------------------------
-        # 3) Standalone .m3u8 fallback
-        # ---------------------------------------------------------
-        for url in re.findall(r"https?://[^\s\"']+?\.m3u8", html):
-            if url in seen:
-                continue
-            seen.add(url)
-            links.append({
-                'file': url.rstrip(";"),
-                'title': f"Episode {len(links)+1}"
-            })
-
-        # ---------------------------------------------------------
-        # 4) UNIVERSAL FALLBACK (if still empty)
-        # ---------------------------------------------------------
-        if not links:
-            for url in re.findall(r"https?://[^\s\"']+?(?:\.mp4(?:/[^\"']+)?|\.m3u8)", html):
-                if url in seen or any(x in url for x in ["playlist", "master"]):
-                    continue
-                seen.add(url)
-                links.append({
-                    'file': url.rstrip(";"),
-                    'title': f"Episode {len(links)+1}"
-                })
-
-        return links
+        return _extract_blogger_links_in_order(html)
 
     except Exception as e:
         _log(f"Error parsing Blogger video links: {e}", xbmc.LOGERROR)
@@ -262,7 +257,7 @@ def parse_blogger_video_links(u):
 def parse_blogger_video_links_script(u):
     if "?alt=" not in u:
         u = u.split("?", 1)[0] + "?alt=json-in-script&callback=fetchBloggerPostContent"
-    elif "json" in u and "callback=" not in u:
+    elif "alt=json" in u and "callback=" not in u:
         u = u.replace("alt=json", "alt=json-in-script&callback=fetchBloggerPostContent")
 
     try:
@@ -278,19 +273,10 @@ def parse_blogger_video_links_script(u):
         data = json.loads(m.group(1))
         html = html_unescape(data.get("entry", {}).get("content", {}).get("$t", ""))
 
-        links, seen = [], set()
+        if "{nextServer}" in html:
+            html = html.split("{nextServer}", 1)[0]
 
-        for url in re.findall(r"https?://[^\s\"']+?(?:\.mp4(?:/[^\s\"']+\.m3u8)?|\.m3u8)", html):
-            if url in seen:
-                continue
-            seen.add(url)
-            links.append({
-                'file': url.strip().rstrip(";"),
-                'title': f"Episode {len(links)+1}"
-            })
-
-        _log(f"Parsed {len(links)} video links from script feed")
-        return links
+        return _extract_blogger_links_in_order(html)
 
     except Exception as e:
         _log(f"Error parsing script-based Blogger feed: {e}", xbmc.LOGERROR)
