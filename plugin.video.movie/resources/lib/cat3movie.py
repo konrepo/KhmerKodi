@@ -15,11 +15,6 @@ from resources.lib.handlers_khmer import (
 
 from resources.lib.handlers_common import USER_AGENT
 
-try:
-    from resources.lib.handlers_blogid import ADDON_ID
-except Exception:
-    ADDON_ID = "plugin.video.movie"
-
 from resources.lib.handlers_playback import (
     resolve_redirect,
     VIDEOLINKS,
@@ -29,8 +24,10 @@ from resources.lib.handlers_playback import (
     Play_VIDEO,
 )
 
-CAT3MOVIE = "https://www.cat3movie.club/"
+ADDON_ID = "plugin.video.movie"
 PLUGIN_HANDLE = int(sys.argv[1])
+
+CAT3MOVIE = "https://www.cat3movie.club/"
 
 
 # ────────────────────────────────────────────────
@@ -64,24 +61,19 @@ def SINDEX_CAT3MOVIE(url, end_directory=True):
 def _clean_cat3movie_title(title):
     title = (title or "").strip()
 
-    # Convert common HTML entity variant if still present
     title = title.replace("&#8211;", "–").replace("&amp;", "&").strip()
 
-    # Remove junk after vertical bar
     if "|" in title:
         title = title.split("|", 1)[0].strip()
 
-    # Remove foreign-language / alternate title after en dash
     if "–" in title:
         title = title.split("–", 1)[0].strip()
 
-    # Keep ASCII only
     title = re.sub(r"[^\x00-\x7F]+", "", title).strip()
-
-    # Collapse whitespace
     title = re.sub(r"\s+", " ", title).strip()
 
     return title
+
 
 def get_post_image(url):
     try:
@@ -96,6 +88,7 @@ def get_post_image(url):
         log(f"Failed to fetch fallback image for {url}: {e}", xbmc.LOGWARNING)
 
     return ""
+
 
 def _render_cat3movie_listing(url, label_suffix=None, include_pagination=True, end_directory=True):
     try:
@@ -223,12 +216,12 @@ def EPISODE_CAT3MOVIE(url, v_image=""):
 
     soup = BeautifulSoup(html, "html.parser")
     v_image = clean_image_url(v_image)
-    
+
     page_title = ""
     title_tag = soup.select_one("h1.single-post-title .post-title")
     if title_tag:
-      page_title = title_tag.get_text(" ", strip=True)
-      page_title = _clean_cat3movie_title(page_title)
+        page_title = title_tag.get_text(" ", strip=True)
+        page_title = _clean_cat3movie_title(page_title)
 
     links = extract_video_sources(soup, html, url, page_title)
 
@@ -254,9 +247,12 @@ def EPISODE_CAT3MOVIE(url, v_image=""):
             "youtu.be",
             "vimeo.com",
             "drive.google.com",
-            "docs.google.com/file/"
+            "docs.google.com/file/",
             "play.cat3movie.club",
             "playhydrax.com",
+            "sooplive.co.kr",
+            "afreecatv",
+            "play.sooplive.co.kr",
         )):
             addLink(vtitle, vurl, "video_hosting", v_image)
         elif base_url.endswith(direct_ext):
@@ -271,24 +267,60 @@ def extract_video_sources(soup, html, page_url="", page_title=""):
     found = []
     seen = set()
 
-    def add_found(link, title=None):
+    def clean_link(link):
         link = (link or "").strip()
         if not link:
-            return
+            return ""
 
         if page_url:
             link = urljoin(page_url, link)
 
-        link = link.replace("&amp;", "&").strip()
+        link = (
+            link.replace("&amp;", "&")
+                .replace("\\/", "/")
+                .replace("\\u0026", "&")
+                .strip()
+        )
+        return link
 
-        if link in seen:
-            return
+    def is_supported_link(link):
+        test = (link or "").lower()
+        if not test:
+            return False
+
+        if "playhydrax.com" in test:
+            return False
+
+        if any(ext in test for ext in (".m3u8", ".mp4", ".mov", ".mkv", ".webm")):
+            return True
+
+        if any(host in test for host in (
+            "ok.ru",
+            "youtube.com",
+            "youtu.be",
+            "vimeo.com",
+            "drive.google.com",
+            "docs.google.com",
+            "sooplive.co.kr",
+            "afreecatv",
+            "play.sooplive.co.kr",
+            "play.cat3movie.club",
+        )):
+            return True
+
+        return False
+
+    def add_found(link, title=None):
+        link = clean_link(link)
+        if not link or link in seen or not is_supported_link(link):
+            return False
 
         seen.add(link)
         found.append({
             "title": title or f"Source {len(found) + 1:02d}",
             "file": link
         })
+        return True
 
     # 0) explicit server list
     server_links = soup.select("#server-list a[href]")
@@ -311,7 +343,6 @@ def extract_video_sources(soup, html, page_url="", page_title=""):
 
         return found
 
-
     # 1) <video> and <source>
     for tag in soup.select("video[src], video source[src]"):
         src = (tag.get("src") or "").strip()
@@ -329,29 +360,20 @@ def extract_video_sources(soup, html, page_url="", page_title=""):
         r'https?://[^\s\'"]+\.(?:m3u8|mp4|mov|mkv|webm)(?:\?[^\s\'"]*)?',
         html,
         re.I
-    ):       
-        
+    ):
         add_found(src, page_title or f"Source {len(found) + 1:02d}")
 
-    # 4) JWPlayer / JS style: file:"..."
-    #for src in re.findall(r'file\s*:\s*[\'"]([^\'"]+)[\'"]', html, re.I):
-    #    add_found(src, "JWPlayer Source")
-
-    # 5) JSON style: "file":"..."
-    #for src in re.findall(r'"file"\s*:\s*"([^"]+)"', html, re.I):
-    #    add_found(src, "JSON Source")
-
-    # 6) sources: [{file:"..."}]
-    #for src in re.findall(r'sources\s*:\s*\[\s*\{file\s*:\s*[\'"]([^\'"]+)[\'"]', html, re.I):
-    #    add_found(src, "JWPlayer Playlist")
-
-    # 7) common embeds
+    # 4) common embeds
     embed_patterns = [
         (r'https?://(?:www\.)?ok\.ru/[^\s\'"]+', "OK.ru"),
         (r'https?://(?:www\.)?youtube\.com/[^\s\'"]+', "YouTube"),
         (r'https?://youtu\.be/[^\s\'"]+', "YouTube"),
         (r'https?://(?:player\.)?vimeo\.com/[^\s\'"]+', "Vimeo"),
         (r'https?://(?:drive|docs)\.google\.com/[^\s\'"]+', "Google Drive"),
+        (r'https?://[^\s\'"]*sooplive\.co\.kr[^\s\'"]*', "SOOP"),
+        (r'https?://[^\s\'"]*afreecatv[^\s\'"]*', "AfreecaTV"),
+        (r'https?://[^\s\'"]*play\.sooplive\.co\.kr[^\s\'"]*', "SOOP"),
+        (r'https?://[^\s\'"]*play\.cat3movie\.club[^\s\'"]*', "Cat3Movie"),
     ]
 
     for pattern, title in embed_patterns:
@@ -377,7 +399,7 @@ def clean_image_url(img_url):
 
 
 # ────────────────────────────────────────────────
-#  BASIC DIRECTORY HELPERS
+#  KODI ITEMS
 # ────────────────────────────────────────────────
 def addDir(name, url, action, iconimage=""):
     li = xbmcgui.ListItem(label=name)

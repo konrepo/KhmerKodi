@@ -219,7 +219,7 @@ def Play_VIDEO(VideoURL):
 
     if "|" in VideoURL:
         VideoURL, header_str = VideoURL.split("|", 1)
-        header_parts = header_str.split("|")
+        header_parts = header_str.split("&")
         headers = dict(part.split("=", 1) for part in header_parts if "=" in part)
     else:
         headers = {}
@@ -228,36 +228,44 @@ def Play_VIDEO(VideoURL):
     referer = headers.get("Referer", "")
 
     if not referer:
-        if "cat3movie.club" in video_url_lower or "playhydrax.com" in video_url_lower:
+        if "xvideos" in video_url_lower or "xvideos-cdn.com" in video_url_lower:
+            referer = "https://www.xvideos.com/"
+        elif "cat3movie.club" in video_url_lower or "playhydrax.com" in video_url_lower:
             referer = "https://www.cat3movie.club/"
         elif "sooplive.co.kr" in video_url_lower or "afreeca" in video_url_lower:
-            referer = "https://www.cat3movie.club/"
+            referer = "https://play.sooplive.co.kr/"
         else:
-            referer = "https://www.cat3movie.club/"
+            referer = "https://www.xvideos.com/"
 
-    headers.setdefault("Referer", referer)
     headers.setdefault("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)")
 
-    if "ok.ru" in VideoURL:
+    if "sooplive.co.kr" in video_url_lower or "afreeca" in video_url_lower:
+        headers["Referer"] = "https://play.sooplive.co.kr/"
+    else:
+        headers.setdefault("Referer", referer)
+
+    if "ok.ru" in video_url_lower:
         try:
             resolved = resolveurl.resolve(VideoURL)
             if resolved:
                 xbmc.log(f"[{ADDON_ID}] OK.ru resolved via resolveurl: {resolved}", xbmc.LOGINFO)
                 VideoURL = resolved
+                video_url_lower = VideoURL.lower()
             else:
                 xbmc.log(f"[{ADDON_ID}] OK.ru could not be resolved via resolveurl", xbmc.LOGERROR)
         except Exception as e:
             xbmc.log(f"[{ADDON_ID}] resolveurl failed for OK.ru: {e}", xbmc.LOGERROR)
 
-    if any(x in VideoURL.lower() for x in ["okcdn.ru", "vkuseraudio.net", "okcdn.video"]):
-        xbmc.log(f"[{ADDON_ID}] OK.ru CDN link already playable", xbmc.LOGINFO)
-        item = xbmcgui.ListItem(path=VideoURL)
-        item.setInfo(type="Video", infoLabels={"title": "Playing..."})
-        xbmcplugin.setResolvedUrl(PLUGIN_HANDLE, True, item)
-        return
-
     header_string = "&".join([f"{k}={v}" for k, v in headers.items()])
     final_url = f"{VideoURL}|{header_string}"
+
+    if any(x in video_url_lower for x in ["okcdn.ru", "vkuseraudio.net", "okcdn.video"]):
+        xbmc.log(f"[{ADDON_ID}] OK.ru CDN link already playable", xbmc.LOGINFO)
+        item = xbmcgui.ListItem(path=final_url)
+        item.setInfo(type="Video", infoLabels={"title": "Playing..."})
+        item.setContentLookup(False)
+        xbmcplugin.setResolvedUrl(PLUGIN_HANDLE, True, item)
+        return
 
     xbmc.log(f"[{ADDON_ID}] Final Play URL: {final_url}", xbmc.LOGINFO)
 
@@ -265,11 +273,12 @@ def Play_VIDEO(VideoURL):
     item.setInfo(type="Video", infoLabels={"title": "Playing..."})
     item.setContentLookup(False)
 
-    if ".m3u8" in VideoURL or "manifest" in VideoURL:
+    if ".m3u8" in video_url_lower or "manifest" in video_url_lower:
+        enable_inputstream_adaptive()
         item.setMimeType("application/vnd.apple.mpegurl")
-        item.setProperty("inputstream", "inputstream.ffmpegdirect")
-        item.setProperty("inputstream.ffmpegdirect.is_realtime_stream", "false")
-        item.setProperty("inputstream.ffmpegdirect.stream_mode", "timeshift")
+        item.setProperty("inputstream", "inputstream.adaptive")
+        item.setProperty("inputstream.adaptive.manifest_type", "hls")
+        item.setProperty("inputstream.adaptive.stream_selection_type", "adaptive")
     else:
         item.setMimeType("video/mp4")
 
