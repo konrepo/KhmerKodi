@@ -521,7 +521,9 @@ def Play_VIDEO(VideoURL):
     # === Automatically Set Proper Referer ===
     referer = headers.get("Referer", "")
     if not referer:
-        if "1a-1791.com" in VideoURL:
+        if "kolabkhmer.embed.vip" in VideoURL:
+            referer = "https://phumikhmer.vip/"
+        elif "1a-1791.com" in VideoURL:
             # Heuristic fallback: prefer sundaydrama.com if unsure
             referer = "https://sundaydrama.com/" if "sundaydrama.com" in VideoURL else "https://www.ckh7.com/"
         elif "sundaydrama.com" in VideoURL:
@@ -529,7 +531,7 @@ def Play_VIDEO(VideoURL):
         elif "ckh7.com" in VideoURL:
             referer = "https://www.ckh7.com/"
         else:
-            referer = "https://www.ckh7.com/"  # Default fallback
+            referer = "https://phumikhmer.vip/"  # Updated default fallback
 
     headers.setdefault("Referer", referer)
     headers.setdefault("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)")
