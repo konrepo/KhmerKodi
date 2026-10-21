@@ -114,7 +114,7 @@ def HOME():
             "categories": [
                 ("VIP", f"{VIP}", ICON_VIP, "index_vip"),            
                 ("Sunday", f"{SUNDAY}", ICON_SUNDAY, "index_sunday"),
-                ("Phumi2", f"{PHUMIK}", ICON_PHUMIK2, "index_phumik"),
+                ("Phumi2", f"{PHUMIK}search/label/Chinese?&max-results=24", ICON_PHUMIK2, "index_phumik"),
                 ("iDrama", f"{IDRAMA}", ICON_IDRAMA, "index_idrama"),                
                 ("KhmerAve", f"{KHMERAVENUE}album/", ICON_KHMERAVE, "index_khmeravenue"),
                 ("Merlkon", f"{MERLKON}album/", ICON_MERLKON, "index_merlkon")

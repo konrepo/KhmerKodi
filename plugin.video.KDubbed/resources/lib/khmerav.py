@@ -11,6 +11,7 @@ from resources.lib.handlers_khmer import (
     OpenURL as OpenURL_KH,
 )
 from resources.lib.handlers_common import USER_AGENT
+from resources.lib.stream_resolver import extract_episode_number
 from resources.lib.handlers_blogid import ADDON_ID
 try:
     ADDON_ID
@@ -153,12 +154,13 @@ def EPISODE_GENERIC(url, v_image="", site_name=''):
     episodes = []
     for a in soup.select("table#latest-videos a[href], div.col-xs-6.col-sm-6.col-md-3 a[href]"):
         v_link = urljoin(url, a['href'])
-        episodes.append(v_link)
+        if "?post_type=videos" not in v_link:
+            episodes.append((extract_episode_number(v_link, a.get_text(" ", strip=True)), v_link))
 
     if episodes:
-        episodes.reverse()
-        for i, v_link in enumerate(episodes, start=1):
-            v_title = f"Episode {i:02d}"
+        episodes = sorted(set(episodes), key=lambda entry: entry[0])
+        for ep_number, v_link in episodes:
+            v_title = f"Episode {ep_number:02d}"
             if submitter:
                 v_title += f" [COLOR grey](by {submitter})[/COLOR]"
             addLink(v_title, v_link, "videolinks", v_image)

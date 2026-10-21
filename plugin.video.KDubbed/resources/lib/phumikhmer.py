@@ -41,44 +41,55 @@ def SINDEX_PHUMIK(url, end_directory=True):  # for search
 def _render_phumik_listing(url, label_suffix=None, include_pagination=True, end_directory=True):
     soup, html = OpenSoup_KH(url, return_html=True)
 
-    posts = soup.select("div.blog-posts div.grid-posts article.blog-post")
+    if soup is None:
+        xbmc.log(f"[{ADDON_ID}] PhumiClub catalog: no HTML parsed for {url}", xbmc.LOGWARNING)
+        if end_directory:
+            xbmcplugin.endOfDirectory(PLUGIN_HANDLE)
+        return
 
+    posts = soup.select("div.blog-posts div.grid-posts article.blog-post")
+    xbmc.log(f"[{ADDON_ID}] PhumiClub catalog: {len(posts)} post containers at {url}", xbmc.LOGINFO)
+    shown = 0
+    seen = set()
     for post in posts:
-        a_tag = post.select_one("div.post-filter-image a.post-filter-link")
+        a_tag = post.select_one("div.post-filter-image a.post-filter-link") or post.select_one("h2.entry-title a")
         h2_tag = post.select_one("h2.entry-title")
         img_tag = post.select_one("img.snip-thumbnail")
-
-        if not (a_tag and h2_tag and img_tag):
+        if not a_tag:
             continue
 
-        # category/tag text
+        title_text = ((a_tag.get("title") or "").strip() or
+                      (h2_tag.get_text(" ", strip=True) if h2_tag else "") or
+                      a_tag.get_text(" ", strip=True)).strip()
+        v_link = urljoin(url, (a_tag.get("href") or "").strip())
+        if not title_text or not v_link or v_link in seen:
+            continue
+
         post_tag = post.select_one("span.post-tag-fly")
         label_tag = post.select_one("span.label-news-flex")
-
         post_tag_text = post_tag.get_text(" ", strip=True).lower() if post_tag else ""
         label_text = label_tag.get_text(" ", strip=True).lower() if label_tag else ""
-        title_text = h2_tag.get_text(" ", strip=True).strip()
         title_lower = title_text.lower()
-        href = (a_tag.get("href") or "").strip().lower()
-
-        # EXCLUDE actor articles
-        if (
-            post_tag_text == "actors"
-            or label_text == "actors"
-            or "/search/label/actors" in href
-            or "biography, career" in title_lower
-            or "popular chinese drama roles" in title_lower
-            or "rising star" in title_lower
-        ):
+        href = v_link.lower()
+        if (post_tag_text == "actors" or label_text == "actors" or
+            "/search/label/actors" in href or "biography, career" in title_lower or
+            "popular chinese drama roles" in title_lower or "rising star" in title_lower):
             continue
 
-        v_link = (a_tag.get("href") or "").strip()
-        v_image = img_tag.get("data-src") or img_tag.get("src") or ""
-        v_image = re.sub(r"/w\d+-h\d+[^/]+/", "/s1600/", v_image)
+        v_image = ((img_tag.get("data-src") or img_tag.get("src") or "") if img_tag else "")
+        if not v_image:
+            nested = a_tag.select_one("img")
+            if nested:
+                v_image = nested.get("data-src") or nested.get("src") or ""
+        v_image = urljoin(url, v_image) if v_image else ""
+        v_image = re.sub(r"/w\d+-h\d+[^/]*/", "/s1600/", v_image)
         v_image = clean_image_url(v_image)
-
+        seen.add(v_link)
+        shown += 1
         label = f"{title_text}{label_suffix}" if label_suffix else title_text
         addDir(label, v_link, "episode_phumik", v_image)
+
+    xbmc.log(f"[{ADDON_ID}] PhumiClub catalog: displayed {shown} items", xbmc.LOGINFO)
 
     if include_pagination:
         next_page = ""

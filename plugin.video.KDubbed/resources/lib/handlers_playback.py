@@ -1,11 +1,12 @@
 import re, sys, json, base64, requests, xbmc, xbmcaddon, xbmcplugin, xbmcgui, resolveurl, urllib.request, urllib.error
-from urllib.parse import urlparse, quote_plus, urljoin
+from urllib.parse import urlparse, quote_plus, urljoin, parse_qsl, urlencode
 from html import unescape as html_unescape
 from bs4 import BeautifulSoup
 
 # ── Base networking utils ────────────────
 from resources.lib.handlers_khmer import OpenURL as OpenURL_KH, OpenSoup as OpenSoup_KH
 from resources.lib.handlers_common import USER_AGENT
+from resources.lib.stream_resolver import resolve_ok_embed, normalize_ok_url
 
 # ── Shared Blogger utilities ─────────────
 from resources.lib.handlers_blogid import (
@@ -241,6 +242,20 @@ def EPISODE_PLAYERS(url, name, icon=""):
 
         blogger_urls = extract_vip_blogger_json_urls_from_page(decoded)
 
+        # VIP_STREMIO_FALLBACK_V2: try WordPress and KhmerDrama before failing.
+        if not blogger_urls:
+            from resources.lib.vip_sources import discover_vip
+            source_name, vip_urls = discover_vip(url, decoded)
+            xbmc.log(f"[{ADDON_ID}] VIP fallback: {source_name} -> {len(vip_urls)} episodes", xbmc.LOGINFO)
+            if vip_urls:
+                if max_ep:
+                    vip_urls = vip_urls[:max_ep]
+                for i, vurl in enumerate(vip_urls, 1):
+                    mode = "play_direct" if vurl.split('?', 1)[0].lower().endswith(('.mp4', '.m3u8')) else "video_hosting"
+                    addLink(f"Episode {i}", vurl, mode, icon)
+                xbmcplugin.endOfDirectory(PLUGIN_HANDLE)
+                return
+
         if not blogger_urls:
             craft = re.search(
                 r'href=["\']?(https?://(?:t\.co|(?:www\.)?(craft4u\.top|tvsabay\.com))/[^"\']+)',
@@ -464,11 +479,29 @@ def Playloop(video_url):
     xbmcplugin.setResolvedUrl(PLUGIN_HANDLE, True, item)
 
 def VIDEO_HOSTING(vlink):
+    from resources.lib.vip_sources import is_khmer_movie, resolve_khmer_movie
+    if is_khmer_movie(vlink):
+        try:
+            actual = resolve_khmer_movie(vlink)
+            if actual and actual != vlink:
+                xbmc.log('[KDUBBED] Khmer Movie episode URL resolved', xbmc.LOGINFO)
+                return VIDEO_HOSTING(actual) if not actual.split('?', 1)[0].lower().endswith(('.mp4', '.m3u8')) else Play_VIDEO(actual)
+        except Exception as exc:
+            xbmc.log(f'[KDUBBED] Khmer Movie resolution failed: {exc}', xbmc.LOGERROR)
+        xbmcgui.Dialog().ok('Playback Error', 'Could not resolve this Khmer Movie episode.')
+        xbmcplugin.setResolvedUrl(PLUGIN_HANDLE, False, xbmcgui.ListItem())
+        return
     resolved = None
     RESOLVABLE_HOSTS = (
         'ok.ru', 'youtube.com', 'youtu.be',
         'youtube-nocookie.com', 'vimeo.com', 'dailymotion.com'
     )
+
+    if "ok.ru" in vlink.lower():
+        resolved = resolve_ok_embed(normalize_ok_url(vlink))
+        if resolved:
+            Play_VIDEO(resolved + "|Referer=https%3A%2F%2Fok.ru%2F&Origin=https%3A%2F%2Fok.ru")
+            return
 
     if any(host in vlink for host in RESOLVABLE_HOSTS):
         try:
@@ -510,11 +543,10 @@ def Play_VIDEO(VideoURL):
         xbmcplugin.setResolvedUrl(PLUGIN_HANDLE, True, item)
         return
 
-    # Parse embedded headers if any (ckch7/sunday)
+    # Kodi URL headers are ampersand-delimited and URL encoded.
     if "|" in VideoURL:
         VideoURL, header_str = VideoURL.split("|", 1)
-        header_parts = header_str.split("|")
-        headers = dict(part.split("=", 1) for part in header_parts if "=" in part)
+        headers = dict(parse_qsl(header_str, keep_blank_values=True))
     else:
         headers = {}
 
@@ -536,28 +568,15 @@ def Play_VIDEO(VideoURL):
     headers.setdefault("Referer", referer)
     headers.setdefault("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)")
 
-    # === Optional: Resolve OK.ru links ===
-    if "ok.ru" in VideoURL:
-        try:
-            resolved = resolveurl.resolve(VideoURL)
-            if resolved:
-                xbmc.log(f"[KDUBBED] OK.ru resolved via resolveurl: {resolved}", xbmc.LOGINFO)
-                VideoURL = resolved
-            else:
-                xbmc.log("[KDUBBED] OK.ru could not be resolved via resolveurl", xbmc.LOGERROR)
-        except Exception as e:
-            xbmc.log(f"[KDUBBED] resolveurl failed for OK.ru: {e}", xbmc.LOGERROR)
-
-    # === Skip if already a direct CDN link ===
-    if any(x in VideoURL.lower() for x in ["okcdn.ru", "vkuseraudio.net", "okcdn.video"]):
-        xbmc.log("[KDUBBED] OK.ru CDN link already playable — skipping header modifications", xbmc.LOGINFO)
-        item = xbmcgui.ListItem(path=VideoURL)
-        item.setInfo(type="Video", infoLabels={"title": "Playing..."})
-        xbmcplugin.setResolvedUrl(PLUGIN_HANDLE, True, item)
-        return
+    if "ok.ru" in VideoURL.lower() and "okcdn.ru" not in VideoURL.lower():
+        resolved = resolve_ok_embed(normalize_ok_url(VideoURL))
+        if resolved:
+            VideoURL = resolved
+            headers["Referer"] = "https://ok.ru/"
+            headers["Origin"] = "https://ok.ru"
 
     # === Reconstruct Final URL ===
-    header_string = "&".join([f"{k}={v}" for k, v in headers.items()])
+    header_string = urlencode(headers)
     final_url = f"{VideoURL}|{header_string}"
 
     xbmc.log(f"[KDUBBED] Final Play URL: {final_url}", xbmc.LOGINFO)
@@ -569,9 +588,7 @@ def Play_VIDEO(VideoURL):
     # Enable inputstream.ffmpegdirect if applicable
     if ".m3u8" in VideoURL or "manifest" in VideoURL:
         item.setMimeType("application/vnd.apple.mpegurl")
-        item.setProperty("inputstream", "inputstream.ffmpegdirect")
-        item.setProperty("inputstream.ffmpegdirect.is_realtime_stream", "false")
-        item.setProperty("inputstream.ffmpegdirect.stream_mode", "timeshift")
+        # Kodi VideoPlayer handles ordinary HLS without ffmpegdirect.
     else:
         item.setMimeType("video/mp4")
 

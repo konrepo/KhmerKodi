@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 _SESSION = requests.Session()
 
 from resources.lib.handlers_common import USER_AGENT
+ADDON_ID = "plugin.video.KDubbed"
 
 # ── Negative Cache (prevents re-downloading bad URLs) ───────────
 _NEG_CACHE, _NEG_TTL, _NEG_MAX = {}, 300, 512
