@@ -81,6 +81,14 @@ SUNDAY       = 'https://www.sundaydrama.com/'
 VIP          = 'https://phumikhmer.vip/'
 IDRAMA       = 'https://www.idramahd.com/'
 
+KHMERAVE_DATA_BASE = 'https://raw.githubusercontent.com/konrepo/KhmerKodi/main/data'
+KHMERAVE_CATALOG_REMOTE = f'{KHMERAVE_DATA_BASE}/khmerave-catalog.json'
+KHMERAVE_CACHE_REMOTE = f'{KHMERAVE_DATA_BASE}/khmerave-cache.json'
+
+# GitHub JSON cache lifetime: 300 seconds = 5 minutes (5 * 60 = 300).
+# After this expires, KDubbed checks GitHub for updated KhmerAve data.
+KHMERAVE_REMOTE_TTL = 300
+
 # ── Icons and Fanart ────────────────────────────────────────────
 IMAGE_PATH     = os.path.join(ADDON_PATH, 'resources', 'images')
 ICON_JOLCHET   = os.path.join(IMAGE_PATH, 'icon.png')
@@ -105,7 +113,8 @@ def GetInput(message, heading, is_hidden=False):
 # Main Menu
 def HOME():
     addDir("[COLOR yellow][B][I]SEARCH[/I][/B][/COLOR]", MERLKON, "search", ICON_SEARCH)
-    addDir("Khmer Live TV", khmertv, "khmer_livetv", ICON_KHMERTV) 
+    addDir("Khmer Live TV", khmertv, "khmer_livetv", ICON_KHMERTV)
+
 
     # ── Structured site definitions ─────────────────────────────
     sites = [
@@ -116,7 +125,7 @@ def HOME():
                 ("Sunday", f"{SUNDAY}", ICON_SUNDAY, "index_sunday"),
                 ("Phumi2", f"{PHUMIK}search/label/Chinese?&max-results=24", ICON_PHUMIK2, "index_phumik"),
                 ("iDrama", f"{IDRAMA}", ICON_IDRAMA, "index_idrama"),                
-                ("KhmerAve", f"{KHMERAVENUE}album/", ICON_KHMERAVE, "index_khmeravenue"),
+                ("KhmerAve", "", ICON_KHMERAVE, "khmerave_cache_index"),
                 ("Merlkon", f"{MERLKON}album/", ICON_MERLKON, "index_merlkon")
             ]
         }       
@@ -277,6 +286,111 @@ def KHMER_LIVETV():
         xbmcgui.Dialog().ok("Error", "Failed to load Live TV feed.")
 
 
+def _khmerave_data_file(filename):
+    os.makedirs(DATA_PATH, exist_ok=True)
+    return os.path.join(DATA_PATH, filename)
+
+def _load_json_file(path):
+    with open(path, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+def _save_json_file(path, data):
+    temp_path = path + ".tmp"
+    with open(temp_path, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False)
+    os.replace(temp_path, path)
+
+def _load_khmerave_remote_json(filename, remote_url):
+    local_cache = _khmerave_data_file(filename)
+    bundled_file = os.path.join(ADDON_PATH, "resources", "data", filename)
+
+    try:
+        if os.path.exists(local_cache):
+            age = time.time() - os.path.getmtime(local_cache)
+            if age < KHMERAVE_REMOTE_TTL:
+                return _load_json_file(local_cache)
+    except Exception as e:
+        xbmc.log(f"[KDUBBED] KhmerAve local cache check failed: {e}", xbmc.LOGWARNING)
+
+    try:
+        response = _SESSION.get(remote_url, headers={"User-Agent": USER_AGENT}, timeout=15)
+        response.raise_for_status()
+        data = response.json()
+        if not isinstance(data, dict):
+            raise ValueError("KhmerAve remote JSON root is not an object")
+        _save_json_file(local_cache, data)
+        return data
+    except Exception as e:
+        xbmc.log(f"[KDUBBED] KhmerAve GitHub fetch failed for {filename}: {e}", xbmc.LOGWARNING)
+
+    try:
+        if os.path.exists(local_cache):
+            return _load_json_file(local_cache)
+    except Exception as e:
+        xbmc.log(f"[KDUBBED] KhmerAve saved cache failed for {filename}: {e}", xbmc.LOGWARNING)
+
+    try:
+        if os.path.exists(bundled_file):
+            return _load_json_file(bundled_file)
+    except Exception as e:
+        xbmc.log(f"[KDUBBED] KhmerAve bundled fallback failed for {filename}: {e}", xbmc.LOGWARNING)
+
+    raise RuntimeError(f"No usable KhmerAve data source for {filename}")
+
+def KHMERAVE_CACHE_INDEX(page=1):
+    try:
+        data = _load_khmerave_remote_json("khmerave-catalog.json", KHMERAVE_CATALOG_REMOTE)
+        page = int(page or 1)
+        total_pages = int(data.get("totalPages", 1))
+        shows = data.get("shows", [])
+    except Exception as e:
+        xbmc.log(f"[KDUBBED] Failed to load KhmerAve catalog: {e}", xbmc.LOGERROR)
+        xbmcgui.Dialog().ok("KhmerAve", "Could not load KhmerAve catalog.")
+        xbmcplugin.endOfDirectory(PLUGIN_HANDLE)
+        return
+
+    page_shows = [show for show in shows if int(show.get("page", 1)) == page]
+    for show in page_shows:
+        title = show.get("title", "").strip()
+        album_url = show.get("url", "").strip()
+        poster = show.get("poster", "") or ICON_KHMERAVE
+        latest = show.get("latest", "").strip()
+        if not title or not album_url:
+            continue
+        label = title
+        if latest:
+            label += f" [COLOR yellow]{latest}[/COLOR]"
+        addDir(label, album_url, "khmerave_cache_episodes", poster)
+
+    if page < total_pages:
+        addDir("[COLOR yellow][B]Next Page >>[/B][/COLOR]", str(page + 1), "khmerave_cache_page", ICON_KHMERAVE)
+    xbmcplugin.endOfDirectory(PLUGIN_HANDLE)
+
+def KHMERAVE_CACHE_EPISODES(album_url, icon=""):
+    try:
+        data = _load_khmerave_remote_json("khmerave-cache.json", KHMERAVE_CACHE_REMOTE)
+        shows = data.get("shows", [])
+        show = next((item for item in shows if item.get("url", "").rstrip("/") == album_url.rstrip("/")), None)
+    except Exception as e:
+        xbmc.log(f"[KDUBBED] Failed to load KhmerAve episode cache: {e}", xbmc.LOGERROR)
+        show = None
+
+    if not show:
+        xbmcgui.Dialog().ok("KhmerAve", "Episodes for this show are not available in the current cache yet.")
+        xbmcplugin.endOfDirectory(PLUGIN_HANDLE)
+        return
+
+    poster = show.get("poster", "") or icon or ICON_KHMERAVE
+    seen = set()
+    for episode in show.get("episodes", []):
+        title = episode.get("title", "").strip()
+        ok_url = episode.get("ok")
+        if not title or not ok_url or ok_url in seen:
+            continue
+        seen.add(ok_url)
+        addLink(title, ok_url, "video_hosting", poster)
+    xbmcplugin.endOfDirectory(PLUGIN_HANDLE)
+
 # ----- Utility Functions -----
 def addDir(name, url, action, iconimage=""):
     li = xbmcgui.ListItem(label=name)
@@ -377,7 +491,12 @@ ROUTES = {
     "sindex_phumik":       lambda: phumikhmer.SINDEX_PHUMIK(url),
     "episode_phumik":      lambda: phumikhmer.EPISODE_PHUMIK(url, icon),
 
-    # ── KhmerAvenue / Merlkon (Generic) ──────────────
+    # ── KhmerAve Cached ────────────────────────────────
+    "khmerave_cache_index":    lambda: KHMERAVE_CACHE_INDEX(1),
+    "khmerave_cache_page":     lambda: KHMERAVE_CACHE_INDEX(url),
+    "khmerave_cache_episodes": lambda: KHMERAVE_CACHE_EPISODES(url, icon),
+
+    # ── KhmerAvenue / Merlkon (Generic) ───────────────
     "index_khmeravenue":   lambda: khmerav.INDEX_GENERIC(url, "index_khmeravenue", "khmeravenue"),
     "index_merlkon":       lambda: khmerav.INDEX_GENERIC(url, "index_merlkon", "merlkon"),
     "index_korean":        lambda: khmerav.INDEX_GENERIC(url, "index_korean", "korean"),
