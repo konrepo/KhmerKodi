@@ -3,27 +3,34 @@
   "source": "khmerave",
   "baseUrl": "https://www.khmeravenue.com/album/",
   "totalPages": 114,
-  "totalShows": 2035,
+  "totalShows": 2036,
   "shows": [
+    {
+      "title": "The Last Immortal",
+      "url": "https://www.khmeravenue.com/album/the-last-immortal/",
+      "poster": "https://www.khmeravenue.com/wp-content/uploads/2026/11/lastimmortal-400x224.jpg",
+      "latest": "01",
+      "page": 1
+    },
     {
       "title": "The Yang Hero 1994 (Remastered)",
       "url": "https://www.khmeravenue.com/album/the-yang-heo-1994-remastered/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2026/11/Yang-260x400.jpg",
-      "latest": "12",
+      "latest": "20",
       "page": 1
     },
     {
       "title": "My Dearest Nemesis",
       "url": "https://www.khmeravenue.com/album/my-dearest-nemesis/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2026/11/nem-400x267.jpg",
-      "latest": "03",
+      "latest": "08",
       "page": 1
     },
     {
       "title": "Make a Wish",
       "url": "https://www.khmeravenue.com/album/make-a-wish/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2026/10/wish-400x252.jpg",
-      "latest": "09",
+      "latest": "13",
       "page": 1
     },
     {
@@ -37,14 +44,14 @@
       "title": "The Letter from the Cloud",
       "url": "https://www.khmeravenue.com/album/the-letter-from-the-cloud/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2026/10/cloud-400x252.jpg",
-      "latest": "21",
+      "latest": "26E",
       "page": 1
     },
     {
       "title": "Love’s Rebellion",
       "url": "https://www.khmeravenue.com/album/loves-rebellion/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2026/10/reb-400x247.jpg",
-      "latest": "10",
+      "latest": "14",
       "page": 1
     },
     {
@@ -72,7 +79,7 @@
       "title": "Swords into Plowshares",
       "url": "https://www.khmeravenue.com/album/swords-into-plowshares/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2026/10/swords-400x225.jpg",
-      "latest": "28",
+      "latest": "33",
       "page": 1
     },
     {
@@ -100,21 +107,21 @@
       "title": "Fox Spirit Matchmaker: Red-Moon Pact",
       "url": "https://www.khmeravenue.com/album/fox-spirit-matchmaker-red-moon-pact/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2026/09/songkream-400x251.jpg",
-      "latest": "32",
+      "latest": "36",
       "page": 1
     },
     {
       "title": "Braveness of the Ming",
       "url": "https://www.khmeravenue.com/album/braveness-of-the-ming/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2026/08/braveness-400x249.jpg",
-      "latest": "54",
+      "latest": "59",
       "page": 1
     },
     {
       "title": "Sai Shang Feng Yun Ji",
       "url": "https://www.khmeravenue.com/album/sai-shang-feng-yun-ji/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2026/09/sai-400x236.jpg",
-      "latest": "36",
+      "latest": "43",
       "page": 1
     },
     {
@@ -129,7 +136,7 @@
       "url": "https://www.khmeravenue.com/album/the-return-of-luk-siu-fung/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2026/09/h_145407_v1_615-400x225.jpg",
       "latest": "40End",
-      "page": 1
+      "page": 2
     },
     {
       "title": "OMG, Your Honour",
@@ -170,7 +177,7 @@
       "title": "Snowfall",
       "url": "https://www.khmeravenue.com/album/snowfall/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2026/08/snowfall-400x232.jpg",
-      "latest": "22",
+      "latest": "24",
       "page": 2
     },
     {
@@ -255,7 +262,7 @@
       "url": "https://www.khmeravenue.com/album/the-shell-game-1980-peal-se-peal-remastered/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2026/07/The_Shell_Game.jpg",
       "latest": "18",
-      "page": 2
+      "page": 3
     },
     {
       "title": "Snow Eagle Lord",
@@ -370,18 +377,18 @@
       "page": 3
     },
     {
-      "title": "The herbalist’s manual",
-      "url": "https://www.khmeravenue.com/album/the-herbalists-manual-2/",
-      "poster": "https://www.khmeravenue.com/wp-content/uploads/2026/06/C093766C-8C8C-4896-94FF-C81DBC1D53FA-400x225.jpeg",
-      "latest": "25End",
-      "page": 3
-    },
-    {
       "title": "Beyond the realm of consciousness",
       "url": "https://www.khmeravenue.com/album/beyond-the-realm-of-consciousness/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2026/06/Picsart_26-06-30_14-59-46-557-400x226.jpg",
       "latest": "33End",
       "page": 3
+    },
+    {
+      "title": "The herbalist’s manual",
+      "url": "https://www.khmeravenue.com/album/the-herbalists-manual-2/",
+      "poster": "https://www.khmeravenue.com/wp-content/uploads/2026/06/C093766C-8C8C-4896-94FF-C81DBC1D53FA-400x225.jpeg",
+      "latest": "25End",
+      "page": 4
     },
     {
       "title": "Justice Pao ATV",
@@ -507,7 +514,7 @@
       "url": "https://www.khmeravenue.com/album/dead-wrong/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2026/05/wrong-400x224.jpg",
       "latest": "28E",
-      "page": 4
+      "page": 5
     },
     {
       "title": "Choice Husband",
@@ -633,7 +640,7 @@
       "url": "https://www.khmeravenue.com/album/demon-girl/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2026/03/demon-girl-400x237.jpg",
       "latest": "30E",
-      "page": 5
+      "page": 6
     },
     {
       "title": "State",
@@ -759,7 +766,7 @@
       "url": "https://www.khmeravenue.com/album/mystery-of-the-twin-swordman-ll/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2026/02/images-400x225.jpeg",
       "latest": "20End",
-      "page": 6
+      "page": 7
     },
     {
       "title": "Mystery of The Twin Swords",
@@ -885,7 +892,7 @@
       "url": "https://www.khmeravenue.com/album/raising-the-bar/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2025/12/bar-400x227.jpg",
       "latest": "25E",
-      "page": 7
+      "page": 8
     },
     {
       "title": "Doubt",
@@ -1011,7 +1018,7 @@
       "url": "https://www.khmeravenue.com/album/point-of-no-return/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2025/11/images-5-400x225.jpeg",
       "latest": "30End",
-      "page": 8
+      "page": 9
     },
     {
       "title": "Chor lau hueng 2001",
@@ -1137,7 +1144,7 @@
       "url": "https://www.khmeravenue.com/album/my-marvellous-fable/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2024/12/marv-400x245.jpg",
       "latest": "24E",
-      "page": 9
+      "page": 10
     },
     {
       "title": "The Greatness Of A Hero (Remastered)",
@@ -1263,7 +1270,7 @@
       "url": "https://www.khmeravenue.com/album/rogue-emperor/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2019/04/rogue-300x194.jpg",
       "latest": "17E",
-      "page": 10
+      "page": 11
     },
     {
       "title": "The Autumn Ballad",
@@ -1389,7 +1396,7 @@
       "url": "https://www.khmeravenue.com/album/dong-ling-da-dao/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2025/08/dong.jpg",
       "latest": "33E",
-      "page": 11
+      "page": 12
     },
     {
       "title": "Your Finesse",
@@ -1515,7 +1522,7 @@
       "url": "https://www.khmeravenue.com/album/the-snow-queen/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2025/06/the-snow-queen-400x225.png",
       "latest": "25E",
-      "page": 12
+      "page": 13
     },
     {
       "title": "Eastern hero (boros sormol neak )",
@@ -1641,7 +1648,7 @@
       "url": "https://www.khmeravenue.com/album/almost-lover/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2025/06/almost-lover-400x199.jpg",
       "latest": "36E",
-      "page": 13
+      "page": 14
     },
     {
       "title": "Jiu Liu Overlord",
@@ -1767,7 +1774,7 @@
       "url": "https://www.khmeravenue.com/album/dashing-youth/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2025/04/dashing-youth-400x210.jpg",
       "latest": "40E",
-      "page": 14
+      "page": 15
     },
     {
       "title": "Man’s best friends (Ku plek jomlek snae)",
@@ -1893,7 +1900,7 @@
       "url": "https://www.khmeravenue.com/album/if-voice-has-memory/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2025/04/voice-400x248.jpg",
       "latest": "32E",
-      "page": 15
+      "page": 16
     },
     {
       "title": "Hello From the Other Side",
@@ -2019,7 +2026,7 @@
       "url": "https://www.khmeravenue.com/album/criminal-investigator-ll-krom-protebatka-pises-veak-pi/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2025/03/57205e1217423_1461739026-400x225.jpg",
       "latest": "30E",
-      "page": 16
+      "page": 17
     },
     {
       "title": "Criminal investigator l (Krom Protebatka Pises)",
@@ -2145,7 +2152,7 @@
       "url": "https://www.khmeravenue.com/album/heavens-retribution-remastered/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2025/02/Heavenx.jpg",
       "latest": "30E",
-      "page": 17
+      "page": 18
     },
     {
       "title": "The Master of Tai Chi",
@@ -2271,7 +2278,7 @@
       "url": "https://www.khmeravenue.com/album/dragon-strike-1979-remastered/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2025/01/250px-Dragon_Strikes.jpg",
       "latest": "60E",
-      "page": 18
+      "page": 19
     },
     {
       "title": "Demi-Gods and Semi-Devils (2021)",
@@ -2397,7 +2404,7 @@
       "url": "https://www.khmeravenue.com/album/my-dearest-2/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2025/01/dear2-400x249.jpg",
       "latest": "25E",
-      "page": 19
+      "page": 20
     },
     {
       "title": "A Bride for a Ride",
@@ -2523,7 +2530,7 @@
       "url": "https://www.khmeravenue.com/album/the-swordsman-lai-bo-yee-dao-aek-lai-bo-ee/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2024/12/IMG_3777-400x225.jpeg",
       "latest": "20End",
-      "page": 20
+      "page": 21
     },
     {
       "title": "Thief of hunour (tra sdech Kombat meas)",
@@ -2649,7 +2656,7 @@
       "url": "https://www.khmeravenue.com/album/gloves-come-off/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2019/08/gloves-300x210.jpg",
       "latest": "25E",
-      "page": 21
+      "page": 22
     },
     {
       "title": "A Measure of Love",
@@ -2775,7 +2782,7 @@
       "url": "https://www.khmeravenue.com/album/lord-of-shanghai/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2024/12/lord-400x245.jpg",
       "latest": "32E",
-      "page": 22
+      "page": 23
     },
     {
       "title": "Sword Snow Stride",
@@ -2901,7 +2908,7 @@
       "url": "https://www.khmeravenue.com/album/the-wolf-princess/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2024/11/wolf-400x240.png",
       "latest": "24E",
-      "page": 23
+      "page": 24
     },
     {
       "title": "The Airport Diary",
@@ -3027,7 +3034,7 @@
       "url": "https://www.khmeravenue.com/album/the-greatness-of-a-hero/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2024/10/greatness-272x400.jpg",
       "latest": "20End",
-      "page": 24
+      "page": 25
     },
     {
       "title": "Always Have Always Will",
@@ -3153,7 +3160,7 @@
       "url": "https://www.khmeravenue.com/album/heir-to-the-throne-is/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2024/10/heir-to-284x400.jpg",
       "latest": "20End",
-      "page": 25
+      "page": 26
     },
     {
       "title": "Untraceable Evidence II",
@@ -3279,7 +3286,7 @@
       "url": "https://www.khmeravenue.com/album/a-romance-of-the-little-forest/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2024/09/forest-400x239.jpeg",
       "latest": "35E",
-      "page": 26
+      "page": 27
     },
     {
       "title": "Unique Lady Season 2",
@@ -3405,7 +3412,7 @@
       "url": "https://www.khmeravenue.com/album/the-chosen-royal-concubine/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2024/08/chosen-400x239.jpg",
       "latest": "48E",
-      "page": 27
+      "page": 28
     },
     {
       "title": "A Change of Destiny",
@@ -3531,7 +3538,7 @@
       "url": "https://www.khmeravenue.com/album/and-the-winner-is-love/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2024/07/winner-400x241.jpg",
       "latest": "48E",
-      "page": 28
+      "page": 29
     },
     {
       "title": "She and Her Perfect Husband",
@@ -3657,7 +3664,7 @@
       "url": "https://www.khmeravenue.com/album/game-of-deceit/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2024/06/deceit-284x400.jpg",
       "latest": "18End",
-      "page": 29
+      "page": 30
     },
     {
       "title": "Land of the Condors",
@@ -3783,7 +3790,7 @@
       "url": "https://www.khmeravenue.com/album/the-solitary-swordsman/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2024/04/solitary-swordsman-400x288.jpg",
       "latest": "24End",
-      "page": 30
+      "page": 31
     },
     {
       "title": "Master of Martial Arts",
@@ -3909,7 +3916,7 @@
       "url": "https://www.khmeravenue.com/album/246702/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2024/04/genghis.jpg",
       "latest": "10End",
-      "page": 31
+      "page": 32
     },
     {
       "title": "Story of the Water Margin",
@@ -4035,7 +4042,7 @@
       "url": "https://www.khmeravenue.com/album/the-return-of-the-condor-heroes-1983/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2024/03/h_119994_v1_o-400x225.jpg",
       "latest": "04",
-      "page": 32
+      "page": 33
     },
     {
       "title": "Moonshine and Valentine",
@@ -4161,7 +4168,7 @@
       "url": "https://www.khmeravenue.com/album/tasty-life/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2024/02/tasty-400x236.jpg",
       "latest": "78E",
-      "page": 33
+      "page": 34
     },
     {
       "title": "The Forgotten Valley",
@@ -4287,7 +4294,7 @@
       "url": "https://www.khmeravenue.com/album/novoland-pearl-eclipse/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2023/12/novo-400x237.jpg",
       "latest": "48E",
-      "page": 34
+      "page": 35
     },
     {
       "title": "Armed Reaction 2021",
@@ -4413,7 +4420,7 @@
       "url": "https://www.khmeravenue.com/album/mind-hunter/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2023/11/mindhunter-400x251.jpg",
       "latest": "28E",
-      "page": 35
+      "page": 36
     },
     {
       "title": "Succession War",
@@ -4539,7 +4546,7 @@
       "url": "https://www.khmeravenue.com/album/ancient-love-poetry/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2023/10/ancient-400x241.jpg",
       "latest": "49E",
-      "page": 36
+      "page": 37
     },
     {
       "title": "ICAC Investigators (2022)",
@@ -4665,7 +4672,7 @@
       "url": "https://www.khmeravenue.com/album/mans-best-friend/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2023/09/pic-3-284x400.jpg",
       "latest": "15End",
-      "page": 37
+      "page": 38
     },
     {
       "title": "Metamorphosis",
@@ -4791,7 +4798,7 @@
       "url": "https://www.khmeravenue.com/album/the-flaming-heart/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2023/08/flaming-400x224.jpg",
       "latest": "24E",
-      "page": 38
+      "page": 39
     },
     {
       "title": "Love Between Fairy and Devil",
@@ -4917,7 +4924,7 @@
       "url": "https://www.khmeravenue.com/album/cheongdamdong-scandal/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2023/08/cheong-400x237.jpg",
       "latest": "126E",
-      "page": 39
+      "page": 40
     },
     {
       "title": "The Pig King",
@@ -5043,7 +5050,7 @@
       "url": "https://www.khmeravenue.com/album/brutally-young-2/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2023/07/brutally2-400x225.jpg",
       "latest": "20E",
-      "page": 40
+      "page": 41
     },
     {
       "title": "Love of Thousand Years",
@@ -5169,7 +5176,7 @@
       "url": "https://www.khmeravenue.com/album/unchained-love/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2023/06/unchained-400x225.jpg",
       "latest": "36E",
-      "page": 41
+      "page": 42
     },
     {
       "title": "Half a Lifelong Romance",
@@ -5295,7 +5302,7 @@
       "url": "https://www.khmeravenue.com/album/noblesse-oblige/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2023/05/noblesse.jpg",
       "latest": "21E",
-      "page": 42
+      "page": 43
     },
     {
       "title": "Codenamed: Vicious Dog",
@@ -5421,7 +5428,7 @@
       "url": "https://www.khmeravenue.com/album/the-dripping-sauce/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2023/04/dripping-400x225.webp",
       "latest": "30E",
-      "page": 43
+      "page": 44
     },
     {
       "title": "The Dance of the Storm",
@@ -5547,7 +5554,7 @@
       "url": "https://www.khmeravenue.com/album/forensic-heroes-season-v/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2023/03/forensicv-300x175.jpg",
       "latest": "30E",
-      "page": 44
+      "page": 45
     },
     {
       "title": "White War",
@@ -5673,7 +5680,7 @@
       "url": "https://www.khmeravenue.com/album/a-jungle-survivor/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2023/02/jungle-300x184.png",
       "latest": "30E",
-      "page": 45
+      "page": 46
     },
     {
       "title": "Tolaka Muk Dek III",
@@ -5799,7 +5806,7 @@
       "url": "https://www.khmeravenue.com/album/of-greed-and-ants/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2023/01/ants-300x177.jpg",
       "latest": "30E",
-      "page": 46
+      "page": 47
     },
     {
       "title": "Legend of Bao Zheng",
@@ -5925,7 +5932,7 @@
       "url": "https://www.khmeravenue.com/album/blossom-in-heart/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2022/12/blossom-300x172.jpg",
       "latest": "52",
-      "page": 47
+      "page": 48
     },
     {
       "title": "Big Mouth",
@@ -6051,7 +6058,7 @@
       "url": "https://www.khmeravenue.com/album/vireak-neary-mulan/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2022/11/hua-300x169.png",
       "latest": "02",
-      "page": 48
+      "page": 49
     },
     {
       "title": "League of Gods",
@@ -6177,7 +6184,7 @@
       "url": "https://www.khmeravenue.com/album/the-story-of-zomb-b/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2022/11/zomb-300x169.png",
       "latest": "20E",
-      "page": 49
+      "page": 50
     },
     {
       "title": "My Sassy Princess",
@@ -6303,7 +6310,7 @@
       "url": "https://www.khmeravenue.com/album/scent-of-love/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2022/10/scent-poster-300x175.jpg",
       "latest": "14E",
-      "page": 50
+      "page": 51
     },
     {
       "title": "History of the Salaryman",
@@ -6429,7 +6436,7 @@
       "url": "https://www.khmeravenue.com/album/dear-prince/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2022/09/dearprince-300x189.png",
       "latest": "19E",
-      "page": 51
+      "page": 52
     },
     {
       "title": "Heroes",
@@ -6555,7 +6562,7 @@
       "url": "https://www.khmeravenue.com/album/across-the-ocean-to-see-you/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2022/08/across-300x175.jpg",
       "latest": "44",
-      "page": 52
+      "page": 53
     },
     {
       "title": "Nice to Meet You",
@@ -6681,7 +6688,7 @@
       "url": "https://www.khmeravenue.com/album/battle-of-the-seven-sisters/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2022/07/sisters-300x169.jpg",
       "latest": "26E",
-      "page": 53
+      "page": 54
     },
     {
       "title": "Vireak Neary Mey Mai",
@@ -6807,7 +6814,7 @@
       "url": "https://www.khmeravenue.com/album/speed/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2022/06/speed-300x183.png",
       "latest": "36E",
-      "page": 54
+      "page": 55
     },
     {
       "title": "Lady Sour",
@@ -6933,7 +6940,7 @@
       "url": "https://www.khmeravenue.com/album/arsenal-military-academy/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2022/05/arsenal-300x174.png",
       "latest": "48E",
-      "page": 55
+      "page": 56
     },
     {
       "title": "Happy Magistrate",
@@ -7059,7 +7066,7 @@
       "url": "https://www.khmeravenue.com/album/always-smile/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2022/04/always-smile-300x168.jpg",
       "latest": "48",
-      "page": 56
+      "page": 57
     },
     {
       "title": "Fall in Love",
@@ -7185,7 +7192,7 @@
       "url": "https://www.khmeravenue.com/album/kkondae-intern/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2022/03/intern-300x168.jpg",
       "latest": "24",
-      "page": 57
+      "page": 58
     },
     {
       "title": "Sword Dynasty",
@@ -7311,7 +7318,7 @@
       "url": "https://www.khmeravenue.com/album/heaven-sword-and-dragon-saber-2022-part-1/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2022/02/271781493_144725554621526_671231050734640237_n-e1643043510174-300x157.jpg",
       "latest": "1",
-      "page": 58
+      "page": 59
     },
     {
       "title": "Guardians of the Ancient Oath",
@@ -7437,7 +7444,7 @@
       "url": "https://www.khmeravenue.com/album/wutai-mountain/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2022/01/wutai3-1-300x200.jpg",
       "latest": "45E",
-      "page": 59
+      "page": 60
     },
     {
       "title": "Sne Doch Pka Rik",
@@ -7563,7 +7570,7 @@
       "url": "https://www.khmeravenue.com/album/the-rebel-princess/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2021/12/rebel-300x185.png",
       "latest": "76E",
-      "page": 60
+      "page": 61
     },
     {
       "title": "AI Romantic",
@@ -7689,7 +7696,7 @@
       "url": "https://www.khmeravenue.com/album/princess-jieyou/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2021/10/jieyou-300x169.jpg",
       "latest": "68E",
-      "page": 61
+      "page": 62
     },
     {
       "title": "Prince of Wolf",
@@ -7815,7 +7822,7 @@
       "url": "https://www.khmeravenue.com/album/my-robot-boyfriend/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2021/09/robot-300x196.jpg",
       "latest": "42",
-      "page": 62
+      "page": 63
     },
     {
       "title": "Love of Seven Fairy Maidens",
@@ -7941,7 +7948,7 @@
       "url": "https://www.khmeravenue.com/album/legend-of-yun-xi/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2021/08/legend-of-yun-xi-1-300x178.jpg",
       "latest": "48E",
-      "page": 63
+      "page": 64
     },
     {
       "title": "The Lover’s Lies",
@@ -8067,7 +8074,7 @@
       "url": "https://www.khmeravenue.com/album/the-legendary-tycoon/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2021/07/the-legendary-tycoon-300x179.jpg",
       "latest": "42E",
-      "page": 64
+      "page": 65
     },
     {
       "title": "Oh My Baby",
@@ -8193,7 +8200,7 @@
       "url": "https://www.khmeravenue.com/album/melody-of-love/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2021/06/melody-of-love-300x185.jpg",
       "latest": "151",
-      "page": 65
+      "page": 66
     },
     {
       "title": "Jumong",
@@ -8319,7 +8326,7 @@
       "url": "https://www.khmeravenue.com/album/the-k2/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2021/05/thek2-01-e1622236997360-300x192.jpg",
       "latest": "32E",
-      "page": 66
+      "page": 67
     },
     {
       "title": "Kru Pet Chet Thor",
@@ -8445,7 +8452,7 @@
       "url": "https://www.khmeravenue.com/album/kingmaker/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2021/04/roneangsne-300x183.jpg",
       "latest": "32E",
-      "page": 67
+      "page": 68
     },
     {
       "title": "Bloody Romance",
@@ -8571,7 +8578,7 @@
       "url": "https://www.khmeravenue.com/album/the-legend-of-zu/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2021/04/legend-of-zu-300x169.jpg",
       "latest": "03E",
-      "page": 68
+      "page": 69
     },
     {
       "title": "Beyond the Realm of Conscience",
@@ -8697,7 +8704,7 @@
       "url": "https://www.khmeravenue.com/album/misty-love-in-the-palace-2005/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2021/02/02-300x248.jpg",
       "latest": "40E",
-      "page": 69
+      "page": 70
     },
     {
       "title": "Female Constables (2013)",
@@ -8823,7 +8830,7 @@
       "url": "https://www.khmeravenue.com/album/kon-kromom-preah-atith/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2021/01/bride-300x192.jpg",
       "latest": "112",
-      "page": 70
+      "page": 71
     },
     {
       "title": "Line Walker III",
@@ -8949,7 +8956,7 @@
       "url": "https://www.khmeravenue.com/album/who-wants-a-baby/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2020/12/baby-300x189.jpg",
       "latest": "20E",
-      "page": 71
+      "page": 72
     },
     {
       "title": "City Hunter",
@@ -9075,7 +9082,7 @@
       "url": "https://www.khmeravenue.com/album/daddy-dearest/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2020/11/daddy-300x171.jpg",
       "latest": "20E",
-      "page": 72
+      "page": 73
     },
     {
       "title": "The Seventh Day",
@@ -9201,7 +9208,7 @@
       "url": "https://www.khmeravenue.com/album/reincarnation/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2020/11/reincarnation-300x195.jpg",
       "latest": "36E",
-      "page": 73
+      "page": 74
     },
     {
       "title": "Kakvei Cham Jeat",
@@ -9327,7 +9334,7 @@
       "url": "https://www.khmeravenue.com/album/boysitter/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2020/10/boysitter3-300x185.jpg",
       "latest": "48E",
-      "page": 74
+      "page": 75
     },
     {
       "title": "Another Lifetime of Fate",
@@ -9453,7 +9460,7 @@
       "url": "https://www.khmeravenue.com/album/fake-phoenixes-s2/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2020/10/fakephoenixesii-300x178.jpg",
       "latest": "12E",
-      "page": 75
+      "page": 76
     },
     {
       "title": "Lbang Sne Songsek",
@@ -9579,7 +9586,7 @@
       "url": "https://www.khmeravenue.com/album/sne-smos-knong-besdong-prean/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2020/09/tempted-300x185.jpg",
       "latest": "32E",
-      "page": 76
+      "page": 77
     },
     {
       "title": "Pdor Muk Pdor Besdong",
@@ -9705,7 +9712,7 @@
       "url": "https://www.khmeravenue.com/album/kompul-nek-serb-rub-sros/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2020/09/planb-300x199.jpg",
       "latest": "18E",
-      "page": 77
+      "page": 78
     },
     {
       "title": "Another Era",
@@ -9831,7 +9838,7 @@
       "url": "https://www.khmeravenue.com/album/two-cops/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2020/08/sopheap-300x199.jpg",
       "latest": "32E",
-      "page": 78
+      "page": 79
     },
     {
       "title": "Veacha Tek Kyom",
@@ -9957,7 +9964,7 @@
       "url": "https://www.khmeravenue.com/album/journey-to-the-west-ii/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2020/07/jttw2c-300x211.jpg",
       "latest": "42E",
-      "page": 79
+      "page": 80
     },
     {
       "title": "Nisai Thida Chombang",
@@ -10083,7 +10090,7 @@
       "url": "https://www.khmeravenue.com/album/angry-mom/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2020/05/angry-1-300x199.jpg",
       "latest": "32E",
-      "page": 80
+      "page": 81
     },
     {
       "title": "The Whirlwind Girl",
@@ -10209,7 +10216,7 @@
       "url": "https://www.khmeravenue.com/album/nek-chombang-vei-kmeng/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2020/04/nek-300x197.jpg",
       "latest": "40E",
-      "page": 81
+      "page": 82
     },
     {
       "title": "Face to Fate",
@@ -10335,7 +10342,7 @@
       "url": "https://www.khmeravenue.com/album/neak-klahan-dav-tep/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2020/01/neakklahan-300x178.jpg",
       "latest": "68",
-      "page": 82
+      "page": 83
     },
     {
       "title": "War and Destiny",
@@ -10461,7 +10468,7 @@
       "url": "https://www.khmeravenue.com/album/burning-flame/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2019/10/burningflame.jpg",
       "latest": "43E",
-      "page": 83
+      "page": 84
     },
     {
       "title": "Only You",
@@ -10587,7 +10594,7 @@
       "url": "https://www.khmeravenue.com/album/fan-li-hua/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2019/08/fanlihua-300x191.jpg",
       "latest": "50E",
-      "page": 84
+      "page": 85
     },
     {
       "title": "Krou Sil",
@@ -10713,7 +10720,7 @@
       "url": "https://www.khmeravenue.com/album/musketeer-and-princess/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2019/06/musketeer-poster-300x206.jpg",
       "latest": "34E",
-      "page": 85
+      "page": 86
     },
     {
       "title": "Young Hero Fong Sai Yuk",
@@ -10839,7 +10846,7 @@
       "url": "https://www.khmeravenue.com/album/datang-female-tour/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2019/05/thunder-300x215.jpg",
       "latest": "46E",
-      "page": 86
+      "page": 87
     },
     {
       "title": "Neak Leng Kombet Hos",
@@ -10965,7 +10972,7 @@
       "url": "https://www.khmeravenue.com/album/house-of-harmony-and-vengeance/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2019/04/house-1-300x189.jpg",
       "latest": "30E",
-      "page": 87
+      "page": 88
     },
     {
       "title": "Battle of Tomorrow",
@@ -11091,7 +11098,7 @@
       "url": "https://www.khmeravenue.com/album/the-eagle-shooting-heroes/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2019/03/eagles2018-300x193.jpg",
       "latest": "50E",
-      "page": 88
+      "page": 89
     },
     {
       "title": "Legend of the Ancient Sword",
@@ -11217,7 +11224,7 @@
       "url": "https://www.khmeravenue.com/album/the-sword-and-the-chess-of-death/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2019/02/sword01-300x225.jpg",
       "latest": "48E",
-      "page": 89
+      "page": 90
     },
     {
       "title": "Chinese Young Chefs",
@@ -11343,7 +11350,7 @@
       "url": "https://www.khmeravenue.com/album/yuthisas-bombak-reung-kdey/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2018/09/yuthisas-1-300x186.jpg",
       "latest": "28E",
-      "page": 90
+      "page": 91
     },
     {
       "title": "Ronteas Plerng Neary Tep",
@@ -11469,7 +11476,7 @@
       "url": "https://www.khmeravenue.com/album/concubines-of-the-qing-emperor/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2018/07/concubines-300x211.jpg",
       "latest": "30End",
-      "page": 91
+      "page": 92
     },
     {
       "title": "The Four 2015",
@@ -11595,7 +11602,7 @@
       "url": "https://www.khmeravenue.com/album/domnar-jivit/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2018/06/domnar-poster-1-300x195.jpg",
       "latest": "32End",
-      "page": 92
+      "page": 93
     },
     {
       "title": "Lork Kru",
@@ -11721,7 +11728,7 @@
       "url": "https://www.khmeravenue.com/album/sword-of-the-outlaw/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2018/05/swordofoutlaw-300x207.jpg",
       "latest": "42End",
-      "page": 93
+      "page": 94
     },
     {
       "title": "Jue Ming Yuan Yang",
@@ -11847,7 +11854,7 @@
       "url": "https://www.khmeravenue.com/album/liu-bowen-ii/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2018/02/liubowen2-300x225.jpg",
       "latest": "42E",
-      "page": 94
+      "page": 95
     },
     {
       "title": "Paladins In Troubled Times",
@@ -11973,7 +11980,7 @@
       "url": "https://www.khmeravenue.com/album/young-sherlock/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2017/11/youngsherlock-300x197.jpg",
       "latest": "33End",
-      "page": 95
+      "page": 96
     },
     {
       "title": "Call of Heroes",
@@ -12099,7 +12106,7 @@
       "url": "https://www.khmeravenue.com/album/kitakau-01/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2017/07/kitakau-300x193.jpg",
       "latest": "20",
-      "page": 96
+      "page": 97
     },
     {
       "title": "Hidden Dragon 01",
@@ -12225,7 +12232,7 @@
       "url": "https://www.khmeravenue.com/album/god-of-medicine-01/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2016/08/god-300x256.jpg",
       "latest": "39END",
-      "page": 97
+      "page": 98
     },
     {
       "title": "Immortal Sword Hero 01",
@@ -12351,7 +12358,7 @@
       "url": "https://www.khmeravenue.com/album/sdach-neak-01/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2016/02/sdach-300x270.jpg",
       "latest": "41END",
-      "page": 98
+      "page": 99
     },
     {
       "title": "Quan Min 01",
@@ -12477,7 +12484,7 @@
       "url": "https://www.khmeravenue.com/album/lompane-ot-sramol-01/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2015/11/lompane-300x205.jpg",
       "latest": "14",
-      "page": 99
+      "page": 100
     },
     {
       "title": "Kombet Ouji 01",
@@ -12603,7 +12610,7 @@
       "url": "https://www.khmeravenue.com/album/lauhan-01/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2015/09/lauhan-300x219.jpg",
       "latest": "38",
-      "page": 100
+      "page": 101
     },
     {
       "title": "Suo Meng Lou",
@@ -12729,7 +12736,7 @@
       "url": "https://www.khmeravenue.com/album/wolf-hero/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2015/08/wolf-hero-300x195.jpg",
       "latest": "35E",
-      "page": 101
+      "page": 102
     },
     {
       "title": "Plerng Komhung",
@@ -12855,7 +12862,7 @@
       "url": "https://www.khmeravenue.com/album/legend-of-legate/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2015/03/legate-300x186.jpg",
       "latest": "44",
-      "page": 102
+      "page": 103
     },
     {
       "title": "Cat Feces Mama",
@@ -12981,7 +12988,7 @@
       "url": "https://www.khmeravenue.com/album/a-change-of-heart-01/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2014/06/change-300x204.png",
       "latest": "30E",
-      "page": 103
+      "page": 104
     },
     {
       "title": "Ahtereak 01",
@@ -13107,7 +13114,7 @@
       "url": "https://www.khmeravenue.com/album/corner-with-love/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2014/04/itstartedwithakiss-300x213.jpg",
       "latest": "22",
-      "page": 104
+      "page": 105
     },
     {
       "title": "Treasure Venture (2000) 01",
@@ -13233,7 +13240,7 @@
       "url": "https://www.khmeravenue.com/album/trail-of-the-everlasting-hero-01/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2014/03/trail-300x203.jpg",
       "latest": "05",
-      "page": 105
+      "page": 106
     },
     {
       "title": "The Breaking Point (1991)",
@@ -13359,7 +13366,7 @@
       "url": "https://www.khmeravenue.com/album/treasure-raiders-2002-01/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2014/02/012-300x285.png",
       "latest": "32e",
-      "page": 106
+      "page": 107
     },
     {
       "title": "Eternal Happiness (2002)",
@@ -13485,7 +13492,7 @@
       "url": "https://www.khmeravenue.com/album/united-we-stand-1984/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2014/01/vcd007-300x225.jpg",
       "latest": "18e",
-      "page": 107
+      "page": 108
     },
     {
       "title": "Ngo Kim Chun Chau (1990)",
@@ -13611,7 +13618,7 @@
       "url": "https://www.khmeravenue.com/album/cambodia-cable-tv-in-usa-2/",
       "poster": "http://www.merlkon.net/webimages/no-image.png",
       "latest": "",
-      "page": 108
+      "page": 109
     },
     {
       "title": "Cambodia Cable TV in USA",
@@ -13737,7 +13744,7 @@
       "url": "https://www.khmeravenue.com/album/ber-ort-pi-bong-ter-mean-neak-na-srolanh-oun/",
       "poster": "http://www.merlkon.net/webimages/no-image.png",
       "latest": "",
-      "page": 109
+      "page": 110
     },
     {
       "title": "Sok Sok Prab Oun Tha Baek",
@@ -13863,7 +13870,7 @@
       "url": "https://www.khmeravenue.com/album/magic-blade-01-2/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2012/11/magicblade1-1-300x207.jpg",
       "latest": "50",
-      "page": 110
+      "page": 111
     },
     {
       "title": "Wudang 01",
@@ -13989,7 +13996,7 @@
       "url": "https://www.khmeravenue.com/album/silence-01/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2012/08/silence.jpg",
       "latest": "16",
-      "page": 111
+      "page": 112
     },
     {
       "title": "Lady Wu 01",
@@ -14115,7 +14122,7 @@
       "url": "https://www.khmeravenue.com/album/laughing-gor-returns-01/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2012/06/laughinggor-300x238.jpg",
       "latest": "03E",
-      "page": 112
+      "page": 113
     },
     {
       "title": "Blacklist 01",
@@ -14241,7 +14248,7 @@
       "url": "https://www.khmeravenue.com/album/shadow-of-violin-p01-2/",
       "poster": "https://www.khmeravenue.com/wp-content/uploads/2012/02/violin1-300x206.jpg",
       "latest": "P04",
-      "page": 113
+      "page": 114
     },
     {
       "title": "Shadow of Violin",
