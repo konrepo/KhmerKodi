@@ -5,7 +5,7 @@
       "title": "Sov Oy Trey Kom Bong Hanh Berng",
       "url": "https://www.khmerdrama.com/album/sov-oy-trey-kom-bong-hanh-berng/",
       "poster": "https://www.khmerdrama.com/wp-content/uploads/2026/10/1-3-400x225.jpg",
-      "latest": "02",
+      "latest": "03",
       "episodes": [
         {
           "title": "Episode 01",
@@ -15,7 +15,12 @@
         {
           "title": "Episode 2",
           "page": "https://www.khmerdrama.com/videos/sov-oy-trey-kom-bong-hanh-berng-02/",
-          "ok": "https://ok.ru/videoembed/16724457425580"
+          "ok": null
+        },
+        {
+          "title": "Episode 3",
+          "page": "https://www.khmerdrama.com/videos/sov-oy-trey-kom-bong-hanh-berng-03/",
+          "ok": null
         }
       ]
     },
@@ -23,7 +28,7 @@
       "title": "Like Dad Like Son",
       "url": "https://www.khmerdrama.com/album/like-dad-like-son/",
       "poster": "https://www.khmerdrama.com/wp-content/uploads/2026/10/1-2-400x225.jpg",
-      "latest": "06",
+      "latest": "11",
       "episodes": [
         {
           "title": "Episode 01",
@@ -33,27 +38,52 @@
         {
           "title": "Episode 2",
           "page": "https://www.khmerdrama.com/videos/like-dad-like-son-02/",
-          "ok": "https://ok.ru/videoembed/16589623134892"
+          "ok": null
         },
         {
           "title": "Episode 3",
           "page": "https://www.khmerdrama.com/videos/like-dad-like-son-03/",
-          "ok": "https://ok.ru/videoembed/16648927382188"
+          "ok": null
         },
         {
           "title": "Episode 4",
           "page": "https://www.khmerdrama.com/videos/like-dad-like-son-04/",
-          "ok": "https://ok.ru/videoembed/16648926988972"
+          "ok": null
         },
         {
           "title": "Episode 5",
           "page": "https://www.khmerdrama.com/videos/like-dad-like-son-05/",
-          "ok": "https://ok.ru/videoembed/16676594977452"
+          "ok": null
         },
         {
           "title": "Episode 6",
           "page": "https://www.khmerdrama.com/videos/like-dad-like-son-06/",
-          "ok": "https://ok.ru/videoembed/16724469549740"
+          "ok": null
+        },
+        {
+          "title": "Episode 7",
+          "page": "https://www.khmerdrama.com/videos/like-dad-like-son-07/",
+          "ok": null
+        },
+        {
+          "title": "Episode 8",
+          "page": "https://www.khmerdrama.com/videos/like-dad-like-son-08/",
+          "ok": null
+        },
+        {
+          "title": "Episode 9",
+          "page": "https://www.khmerdrama.com/videos/like-dad-like-son-09/",
+          "ok": null
+        },
+        {
+          "title": "Episode 10",
+          "page": "https://www.khmerdrama.com/videos/like-dad-like-son-10/",
+          "ok": null
+        },
+        {
+          "title": "Episode 11",
+          "page": "https://www.khmerdrama.com/videos/like-dad-like-son-11/",
+          "ok": null
         }
       ]
     },
@@ -61,7 +91,7 @@
       "title": "The Maiden",
       "url": "https://www.khmerdrama.com/album/the-maiden/",
       "poster": "https://www.khmerdrama.com/wp-content/uploads/2026/10/1-1-400x225.jpg",
-      "latest": "10",
+      "latest": "15",
       "episodes": [
         {
           "title": "Episode 01",
@@ -71,47 +101,72 @@
         {
           "title": "Episode 2",
           "page": "https://www.khmerdrama.com/videos/the-maiden-02/",
-          "ok": "https://ok.ru/videoembed/16497382001324"
+          "ok": null
         },
         {
           "title": "Episode 3",
           "page": "https://www.khmerdrama.com/videos/the-maiden-03/",
-          "ok": "https://ok.ru/videoembed/16520132364972"
+          "ok": null
         },
         {
           "title": "Episode 4",
           "page": "https://www.khmerdrama.com/videos/the-maiden-04/",
-          "ok": "https://ok.ru/videoembed/16567636003500"
+          "ok": null
         },
         {
           "title": "Episode 5",
           "page": "https://www.khmerdrama.com/videos/the-maiden-05/",
-          "ok": "https://ok.ru/videoembed/16567636200108"
+          "ok": null
         },
         {
           "title": "Episode 6",
           "page": "https://www.khmerdrama.com/videos/the-maiden-06/",
-          "ok": "https://ok.ru/videoembed/16589622872748"
+          "ok": null
         },
         {
           "title": "Episode 7",
           "page": "https://www.khmerdrama.com/videos/the-maiden-07/",
-          "ok": "https://ok.ru/videoembed/16648925219500"
+          "ok": null
         },
         {
           "title": "Episode 8",
           "page": "https://www.khmerdrama.com/videos/the-maiden-08/",
-          "ok": "https://ok.ru/videoembed/16648925874860"
+          "ok": null
         },
         {
           "title": "Episode 9",
           "page": "https://www.khmerdrama.com/videos/the-maiden-09/",
-          "ok": "https://ok.ru/videoembed/16676594649772"
+          "ok": null
         },
         {
           "title": "Episode 10",
           "page": "https://www.khmerdrama.com/videos/the-maiden-10/",
-          "ok": "https://ok.ru/videoembed/16724469090988"
+          "ok": null
+        },
+        {
+          "title": "Episode 11",
+          "page": "https://www.khmerdrama.com/videos/the-maiden-11/",
+          "ok": null
+        },
+        {
+          "title": "Episode 12",
+          "page": "https://www.khmerdrama.com/videos/the-maiden-12/",
+          "ok": null
+        },
+        {
+          "title": "Episode 13",
+          "page": "https://www.khmerdrama.com/videos/the-maiden-13/",
+          "ok": null
+        },
+        {
+          "title": "Episode 14",
+          "page": "https://www.khmerdrama.com/videos/the-maiden-14/",
+          "ok": null
+        },
+        {
+          "title": "Episode 15",
+          "page": "https://www.khmerdrama.com/videos/the-maiden-15/",
+          "ok": null
         }
       ]
     },
@@ -349785,6 +349840,19 @@
           "title": "Episode 22",
           "page": "https://www.khmerdrama.com/videos/phkay-besdoung-22-end/",
           "ok": "https://ok.ru/videoembed/1778022419179"
+        }
+      ]
+    },
+    {
+      "title": "The Lawsuit of the 5 Women",
+      "url": "https://www.khmerdrama.com/album/the-lawsuit-of-the-5-women/",
+      "poster": "https://www.khmerdrama.com/wp-content/uploads/2026/11/1-400x225.jpg",
+      "latest": "1",
+      "episodes": [
+        {
+          "title": "Episode 01",
+          "page": "https://www.khmerdrama.com/album/the-lawsuit-of-the-5-women/",
+          "ok": "https://ok.ru/videoembed/16813953977004"
         }
       ]
     }
